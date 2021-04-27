@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS driver_config_file
+(
+  id int(10) unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  driver_type varchar(255),
+  active boolean NOT NULL,
+  file_name varchar(255),
+  is_required char(1),
+  allow_extension varchar(255),
+  is_show_expired BOOLEAN NOT NULL DEFAULT FALSE,
+  is_show_register BOOLEAN NOT NULL DEFAULT FALSE,
+  note text,
+  ins_id int(11) NOT NULL COMMENT 'Created by column',
+  upd_id int(11) COMMENT 'Updated by column',
+  ins_date timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT 'Created at column',
+  upd_date timestamp COMMENT 'Updated at column',
+  del_flag char(1) DEFAULT '0' NOT NULL COMMENT 'Delete flag column'
+);
+INSERT INTO driver_config_file (active, file_name,is_show_register,is_show_expired,allow_extension) VALUES
+  ('1', 'Bằng lái xe',true,true,'all'),
+  ('1', 'CMT mặt trước',false,false,'all'),
+  ('0', 'CMT mặt sau',false,false,'all');
+
+CREATE TABLE IF NOT EXISTS driver_file
+(
+  id int(10) unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  driver_id int(10) NOT NULL,
+  driver_config_file_id INT(10) NOT NULL,
+  file_id int(10) NOT NULL,
+  ref_no char(100),
+  note text,
+  expire_date date,
+  register_date date,
+  ins_id int(11) NOT NULL COMMENT 'Created by column',
+  upd_id int(11) COMMENT 'Updated by column',
+  ins_date timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT 'Created at column',
+  upd_date timestamp COMMENT 'Updated at column',
+  del_flag char(1) DEFAULT '0' NOT NULL COMMENT 'Delete flag column'
+);
+
+ALTER TABLE `drivers` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, CHANGE `driver_type` `driver_type` CHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `mobile_no` `mobile_no` CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `identity_no` `identity_no` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `full_name` `full_name` VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `address` `address` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `current_address` `current_address` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `birth_date` `birth_date` DATE NULL, CHANGE `sex` `sex` CHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `full_name_accent` `full_name_accent` VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `standard_mobile_no` `standard_mobile_no` CHAR(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `note` `note` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL, CHANGE `working_status` `working_status` INT(11) NULL, CHANGE `upd_id` `upd_id` INT(11) NULL DEFAULT NULL COMMENT 'Updated by column', CHANGE `ins_date` `ins_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at column', CHANGE `upd_date` `upd_date` TIMESTAMP NULL DEFAULT NULL COMMENT 'Updated at column';

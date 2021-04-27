@@ -1,0 +1,31 @@
+.btn-import:not(:last-child) {
+    border-left: 1px solid #c5c5c5;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.selected-toolbar.btn-group {
+    margin-right: 16px;
+}
+
+.selected-toolbar.btn-group .btn-import {
+    border-left: 1px solid #c5c5c5;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.toolbar.btn-group {
+    margin-right: 16px;
+}
+
+.table-scroll {
+    width: 100% !important;
+}
+
+button.btn-print-template {
+    padding-left: 0;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 0;
+}

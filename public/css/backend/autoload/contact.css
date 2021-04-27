@@ -1,0 +1,11 @@
+#modal_add .content-body {
+    max-width: none;
+}
+.content-body {
+    max-width: 540px;
+}
+
+.card-box.confirm-display,
+.card-box.form-display {
+    height: calc(100vh - 120px);
+}

@@ -1,0 +1,382 @@
+.table-sorting {
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+.table-sorting:before {
+    position: absolute;
+    right: 0.5em;
+    content: "\2191";
+    opacity: 0.3;
+    color: #4c5667;
+}
+
+.table-sorting:after {
+    position: absolute;
+    right: 0;
+    content: "\2193";
+    opacity: 0.3;
+    color: #4c5667;
+}
+
+.table-sorting.sorting_asc:after,
+.table-sorting.sorting_desc:before {
+    opacity: 1;
+}
+
+#table-scroll .list-action a {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#table-scroll .list-action a .fa-pencil {
+    color: #3f51b5;
+}
+
+#table-scroll .list-action a .fa-trash-o {
+    color: #ee6e73;
+}
+
+#table-scroll .list-action a .fa-copy {
+    color: #66bb6a;
+}
+
+#table-scroll .list-action a .fa-history {
+    color: #f1b53d;
+}
+
+#deleted_modal .table-scroll {
+    height: calc(100vh - 200px);
+}
+
+.table-scroll table.table > thead > tr.filter-row > th {
+    font-weight: normal;
+    padding: 0;
+}
+
+tr.filter-row > th td,
+tr.filter-row > th th {
+    border: none;
+}
+
+tr.filter-row > th thead td,
+tr.filter-row > th thead th {
+    border: none;
+}
+
+table thead tr.active th:hover {
+    background-color: #e3f2fd !important;
+    border-left: 1px solid #d6d6d6 !important;
+    border-right: 1px solid #d6d6d6 !important
+}
+
+tr.filter-row > th tbody tr:hover {
+    background: unset;
+}
+
+tr.filter-row > th tbody tr td:last-child {
+    padding: 8px;
+}
+
+.table > tr > td, .table > tr > th {
+    padding: 0.5em;
+}
+
+.table > thead > tr > th {
+    vertical-align: middle;
+    text-align: center;
+    color: #007bff;
+}
+
+tr.filter-row th .form-control {
+    border-radius: 0;
+    border: 1px solid #fafafa;
+    line-height: 24px;
+    margin: 0 2px;
+}
+
+.table-scroll {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    height: calc(100vh - 170px);
+}
+
+.table-scroll table.table-bordered {
+    width: 100%;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(197, 197, 197, 0.5);
+}
+
+.table-scroll > .main-table > table > thead > tr > th {
+    background-color: #fafafa;
+    min-width: 100px;
+    z-index: 3;
+}
+
+.table-wrap {
+    position: relative;
+}
+
+.table-scroll table.table > thead > tr > th,
+.table-scroll table.table > tbody > tr > td {
+    padding: 10px 10px;
+    vertical-align: top;
+}
+
+.table-scroll thead tr:nth-child(1) th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.table-scroll table.table > thead > tr:nth-child(2) > th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 40px;
+}
+
+.table-scroll tr.even td {
+    background-color: white;
+}
+
+.table-scroll tr.odd td {
+    background-color: white;
+}
+
+/* safari and ios need the tfoot itself to be position:sticky also */
+.table-scroll tfoot,
+.table-scroll tfoot th,
+.table-scroll tfoot td {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    z-index: 4;
+}
+
+.table-scroll table.table > thead > tr > th:nth-child(1) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    z-index: 4;
+}
+
+.table-scroll table.table > tbody > tr > td:nth-child(1) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+}
+
+.table-scroll table.table > thead > tr > th:nth-child(2) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 50px;
+    z-index: 4;
+    width: 150px;
+}
+
+.table-scroll table.table > tbody > tr > td:nth-child(2) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 50px;
+    z-index: 2;
+}
+
+.table-scroll table.table > thead > tr > th:nth-child(3) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 200px;
+    z-index: 4;
+}
+
+.table-scroll table.table > tbody > tr > td:nth-child(3) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 200px;
+    z-index: 2;
+}
+
+table thead tr.active {
+    background: #fafafa;
+    border: 1px solid #f0f0f0;
+}
+
+.filter-row .btn-outline-secondary {
+    border-radius: 0;
+    background-color: #fafafa;
+    border: #FFFFFF;
+}
+
+.filter-row .btn-outline-secondary:hover {
+    color: #212529;
+}
+.filter-row .filter-group .show>.btn-outline-secondary.dropdown-toggle:hover {
+    color: #fafafa;
+}
+
+.filter-row .filter-group .show>.btn-outline-secondary.dropdown-toggle:focus,
+.filter-row .filter-group .btn-outline-secondary.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.table-bordered td, .table-bordered th {
+    border: none;
+}
+
+#main-table .fa.fa-phone {
+    color: #52bb56;
+    margin: 0 8px;
+    font-size: 18px;
+}
+
+#main-table .fa.fa-envelope {
+    color: #72bbb4;
+    margin: 0 8px;
+    font-size: 16px;
+}
+
+#main-table .fa.fa-map-marker {
+    color: #72bbb4;
+    margin: 0 8px;
+    font-size: 16px;
+}
+
+.olScrollable::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+}
+
+.olScrollable::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.olScrollable::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.olScrollable::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.import-table-scroll {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: scroll;
+    height: 50vh;
+}
+
+.import-table-scroll table {
+    width: 100%;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+.import-table-scroll thead tr th {
+    background-color: #fafafa;
+    min-width: 100px;
+}
+
+.import-table-scroll th,
+.import-table-scroll td {
+    padding: 5px 10px;
+    vertical-align: top;
+}
+
+.import-table-scroll thead tr:nth-child(1) th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.import-table-scroll thead tr:nth-child(2) th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 30px;
+}
+
+.import-table-scroll tfoot,
+.import-table-scroll tfoot th,
+.import-table-scroll tfoot td {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    z-index: 4;
+}
+
+.import-table-scroll th:nth-child(1) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    z-index: 4;
+}
+
+.import-table-scroll td:nth-child(1) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background-color: white;
+}
+
+.import-table-scroll th:nth-child(2) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 130px;
+    z-index: 4;
+    width: 100px;
+}
+
+.import-table-scroll td:nth-child(2) {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 130px;
+    z-index: 2;
+    background-color: white;
+
+}
+
+/*Paging*/
+.pagination-info {
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 6px;
+}
+
+.pagination-info > div {
+    display: flex;
+}
+
+.pagination.pagination-split {
+    margin: 0;
+}
+
+.page-link {
+    border: none !important;
+}
+
+.pagination-result-info {
+    margin-bottom: 0;
+    line-height: 32px;
+}
+
+.table-scroll .ui-resizable-e:last-child {
+    right: 0;
+}

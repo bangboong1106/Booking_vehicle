@@ -1,0 +1,547 @@
+.text-center p {
+  color: #0c7cd5;
+  margin-top: 15px !important;
+}
+
+.content-history {
+  background-color: #ffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  margin: 8px;
+  margin-bottom: 24px;
+  padding: 0px;
+}
+
+.content-history .timeline {
+  background-color: #e5e5e5;
+}
+
+.content-history .timeline .timeline-item.alt .panel {
+  margin-left: 12px;
+}
+
+input:disabled {
+  background-color: #ddd;
+}
+
+.content-history .empty-box {
+  position: static;
+  margin-top: 8px;
+}
+
+.panel .panel-body p {
+  margin-top: 10px !important;
+}
+
+.timeline-item.alt .timeline-date,
+.timeline-item.alt h4,
+.timeline-item.alt p {
+  text-align: left;
+}
+
+.contact-search {
+  color: blue;
+  cursor: pointer;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}
+
+.code-config {
+    /* width: 40%; */
+    float: left;
+}
+
+.order-code {
+    /* width: 60%; */
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    height: 36px;
+}
+
+.code-config .select2-container--default .select2-selection--single {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+@media (min-width: 1200px) {
+  .col-xl-1 {
+    -ms-flex: 0 0 14%;
+    max-width: 14%;
+    min-height: 70px;
+    flex: 0 0 14%;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
+
+.status {
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.card-body {
+  padding: 0.5rem;
+}
+
+div.stamp {
+  position: absolute;
+  top: 0px;
+  right: 50px;
+}
+
+div.box.cost {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #999;
+  position: relative;
+}
+
+.list-group-item.detail-info div.box.cost {
+  top: 30px;
+}
+
+div.box.cost:after {
+  content: "Đơn hàng đã phát sinh chi phí";
+  position: absolute;
+  top: 36px;
+  z-index: 1;
+  font-family: Arial, sans-serif;
+  -webkit-transform: rotate(20deg);
+  -moz-transform: rotate(20deg);
+  -ms-transform: rotate(20deg);
+  -o-transform: rotate(20deg);
+  transform: rotate(20deg);
+  font-size: 18px;
+  color: #f90404;
+  background: #fff;
+  border: solid 6px #fd0303;
+  padding: 5px;
+  border-radius: 16px;
+  zoom: 1;
+  filter: alpha(opacity=20);
+  opacity: 0.75;
+  -webkit-text-shadow: 0 0 2px #c00;
+  text-shadow: 0 0 2px #ff0101;
+  box-shadow: 0 0 2px #f00;
+}
+
+label.order-status-select {
+  display: block;
+  padding: 12px 8px 12px 28px;
+  /* color: #fff; */
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-weight: bold;
+  border: 2px solid;
+  border-radius: 16px;
+}
+
+label.order-status-select input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+label.order-status-select span {
+  position: absolute;
+  top: 16px;
+  left: 12px;
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  border: 1px solid #80898e;
+  background-color: #fff;
+}
+
+label.order-status-select span:after {
+  top: 2px;
+  left: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #67d1f8;
+  content: "";
+  position: absolute;
+  display: inline-block;
+  transform: scale(0);
+  transition: transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+}
+
+label.order-status-select input:checked ~ span:after {
+  transform: scale(1);
+}
+
+.table-scroll.deleted-table thead th:nth-child(2),
+.table-scroll.deleted-table thead th:nth-child(3) {
+  z-index: unset;
+  left: unset;
+}
+
+.table-scroll.deleted-table td:nth-child(2),
+.table-scroll.deleted-table td:nth-child(3) {
+  position: inherit;
+}
+
+.table-scroll.deleted-table table.table > thead > tr > th:nth-child(2),
+.table-scroll.deleted-table table.table > tbody > tr > td:nth-child(2) {
+  left: 200px;
+}
+
+.table-scroll.deleted-table table.table > thead > tr > th:nth-child(3),
+.table-scroll.deleted-table table.table > tbody > tr > td:nth-child(3) {
+  left: 370px;
+}
+
+.declaration-export-body .row {
+  padding: 0 8px;
+}
+
+.declaration-export-body .row.parameter {
+  padding: 0 28px;
+}
+
+.declaration-export-body .row.custom-parameter {
+  padding: 0 16px;
+}
+
+.declaration-export-body .title {
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-size: 20px;
+  padding: 0 16px;
+}
+
+.declaration-export-body div[id*="declaration-range"] {
+  height: 38px !important;
+}
+
+.selected-toolbar {
+  padding: 0 2px 3px 2px;
+}
+
+.selected-toolbar .mass-destroy-btn {
+  background: white;
+  border: 1px solid #c5c5c5;
+  margin-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.selected-toolbar .btn-import:nth-child(3) {
+  border-right: 1px solid #c5c5c5;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.dropdown.action.export-toolbar {
+  border: 1px solid #c5c5c5;
+  border-right: 3px;
+  border-radius: 0;
+  margin: 0;
+  height: 40px;
+  color: #007bff !important;
+  vertical-align: middle;
+  padding: 3px 0;
+}
+
+table.list-goods .thead-light th {
+  text-align: left;
+}
+
+.dropdown.action.export-toolbar > a i {
+  margin: 0 2px;
+}
+
+.row.import-type {
+  margin: 12px 8px;
+}
+
+.tab-content,
+.content-detail {
+  max-width: 1200px;
+}
+
+table.table-goods tbody tr td {
+  padding: 0px;
+  border: 1px solid #d6d6d6;
+}
+
+table.table-goods thead tr,
+table.table-goods tfoot tr {
+  background: #f2f2f2;
+  border: 1px solid #f2f2f2;
+}
+
+table.table-goods tbody tr td .form-control,
+table.table-goods tfoot tr td .form-control {
+  border: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+table.table-goods tbody tr td .form-control,
+table.table-goods tfoot tr td .form-control {
+  height: 38px;
+}
+
+table.table-goods tfoot tr td .form-control {
+  height: 32px;
+}
+
+table.table-goods tfoot tr td {
+  padding: 4px;
+}
+
+table.table-goods tbody tr:hover .form-control {
+  border: 1px solid #f2f2f2;
+}
+
+table.table-goods {
+  max-width: 1600px;
+  width: 1200px;
+  overflow: scroll;
+}
+
+/* The container */
+table.table-goods .container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+table.table-goods .container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+table.table-goods .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+table.table-goods .container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+table.table-goods .container input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+table.table-goods .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+table.table-goods .container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+table.table-goods .container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.content-detail .list-goods {
+  max-width: 1600px;
+  width: 1200px;
+  overflow: scroll;
+}
+
+.wrap-total {
+  padding: 10px;
+}
+
+.wrap-total button .fa.fa-plus {
+  margin-right: 8px;
+}
+
+.wrap-add-field {
+  height: 63px;
+  background-color: #f2f2f2;
+  border: 1px solid #d6d6d6;
+  border-radius: 3px;
+  flex: auto;
+  margin: 10px;
+}
+
+.wrap-add-btn {
+  text-align: center;
+  vertical-align: middle;
+  margin: auto 0;
+  padding: 18px;
+}
+
+.wrap-add-btn .text,
+.wrap-add-btn .fa.fa-plus {
+  color: #1976d2;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.btn-secondary2 {
+  height: 32px;
+  line-height: 20px !important;
+  padding: 5px 12px;
+  border-radius: 3px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #1976d2;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #1976d2;
+  font-size: 13px;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-variant: normal;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  -moz-transition: 0.3s ease-in-out;
+  -webkit-transition: 0.3s ease-in-out;
+  position: relative;
+}
+
+.goods-insure {
+  margin: 0 auto;
+  width: 50%;
+  float: none;
+  margin-top: 8px;
+}
+
+.location-item-default {
+  display: none;
+}
+
+.location-order {
+  /*padding: 0 0 0 48px;*/
+}
+
+.delete-location {
+  text-align: center;
+  vertical-align: middle;
+  /* margin: 0 auto; */
+  margin-top: 8px;
+  width: 24px;
+  cursor: pointer;
+}
+
+.m-l-24 {
+  margin-left: 24px;
+}
+
+.m-l-12 {
+  margin-left: 12px;
+}
+
+.import-table thead th span {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.import-table tbody td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.import-table tbody td:first-child {
+  white-space: unset;
+}
+
+@media only screen and (min-width: 375px) and (max-width: 750px) {
+  .label-info {
+    display: none;
+  }
+
+  .m-l-24 {
+    margin-left: 0 !important;
+  }
+
+  .m-l-12 {
+    margin-left: 0 !important;
+  }
+
+  .delete-location {
+    margin-left: 8px;
+  }
+}
+
+button.btn-print-template {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 0;
+}
+
+button.btn-update-document {
+  border-radius: 4px;
+  border: 1px solid #c5c5c5;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background: white;
+  border-left: 0;
+}
+button.btn-update-revenue {
+  border: none;
+  background: white;
+}
+button.btn-update-vin-no {
+  border: none;
+  background: white;
+}
+.table-scroll {
+  height: calc(100vh - 220px);
+}
+.dropdown-menu .fa {
+  margin-right: 8px;
+}
+button.btn-middle {
+  background: white;
+  border: 1px solid #c5c5c5;
+  border-left: none;
+}

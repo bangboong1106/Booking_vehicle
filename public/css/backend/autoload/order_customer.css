@@ -1,0 +1,256 @@
+#deleted_modal .table-scroll table.table > thead > tr > th:nth-child(2),
+#deleted_modal .table-scroll table.table > thead > tr > th:nth-child(3),
+#deleted_modal .table-scroll table.table > tbody > tr > td:nth-child(2),
+#deleted_modal .table-scroll table.table > tbody > tr > td:nth-child(3) {
+    position: relative;
+    left: 0;
+    z-index: 1;
+}
+
+#order_client_modal .modal-dialog {
+    max-width: 80%;
+}
+
+#order_client_modal .table-scroll table.table > thead > tr > th:nth-child(3),
+#order_client_modal .table-scroll table.table > tbody > tr > td:nth-child(3) {
+    position: relative;
+    left: 0;
+    z-index: 1;
+}
+
+#table-vehicle-group-info {
+    padding: 16px;
+    margin: 8px;
+}
+
+#wrap-add-vehicle-group {
+    border-radius: 4px;
+    width: 180px;
+    padding: 4px;
+    margin: 8px;
+    border: 1px solid #c5c9cd;
+}
+
+#wrap-add-vehicle-group .fa.fa-plus {
+    margin-right: 8px;
+}
+
+.content-body {
+    max-width: 1200px;
+}
+.table-scroll {
+    height: calc(100vh - 220px);
+  }
+
+table.list-goods .thead-light th {
+    text-align: left;
+}
+
+.dropdown.action.export-toolbar > a i {
+    margin: 0 2px;
+}
+
+.row.import-type {
+    margin: 12px 8px;
+}
+
+.tab-content,
+.content-detail {
+    max-width: 1200px;
+}
+
+table.table-goods tbody tr td {
+    padding: 0px;
+    border: 1px solid #d6d6d6;
+}
+
+table.table-goods thead tr,
+table.table-goods tfoot tr {
+    background: #f2f2f2;
+    border: 1px solid #f2f2f2;
+}
+
+table.table-goods tbody tr td .form-control,
+table.table-goods tfoot tr td .form-control {
+    border: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+table.table-goods tbody tr td .form-control,
+table.table-goods tfoot tr td .form-control {
+    height: 38px;
+}
+
+table.table-goods tfoot tr td .form-control {
+    height: 32px;
+}
+
+table.table-goods tfoot tr td {
+    padding: 4px;
+}
+
+table.table-goods tbody tr:hover .form-control {
+    border: 1px solid #f2f2f2;
+}
+
+table.table-goods {
+    max-width: 1600px;
+    width: 1200px;
+    overflow: scroll;
+}
+
+/* The container */
+table.table-goods .container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+table.table-goods .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+table.table-goods .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+table.table-goods .container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+table.table-goods .container input:checked ~ .checkmark {
+    background-color: #2196f3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+table.table-goods .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+table.table-goods .container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+table.table-goods .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.content-detail .list-goods {
+    max-width: 1600px;
+    width: 1200px;
+    overflow: scroll;
+}
+
+.wrap-total {
+    padding: 10px;
+}
+
+.wrap-total button .fa.fa-plus {
+    margin-right: 8px;
+}
+
+.wrap-add-field {
+    height: 63px;
+    background-color: #f2f2f2;
+    border: 1px solid #d6d6d6;
+    border-radius: 3px;
+    flex: auto;
+    margin: 10px;
+}
+
+.wrap-add-btn {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto 0;
+    padding: 18px;
+}
+
+.wrap-add-btn .text,
+.wrap-add-btn .fa.fa-plus {
+    color: #1976d2;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.btn-secondary2 {
+    height: 32px;
+    line-height: 20px !important;
+    padding: 5px 12px;
+    border-radius: 3px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #1976d2;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #1976d2;
+    font-size: 13px;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-variant: normal;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -webkit-transition: 0.3s ease-in-out;
+    position: relative;
+}
+
+.goods-insure {
+    margin: 0 auto;
+    width: 50%;
+    float: none;
+    margin-top: 8px;
+}
+
+.hide {
+    display: none;
+}
+
+.bg-disable-combo-box {
+    background-color: #eee;
+}
+button.btn-update-revenue {
+    border-radius: 4px;
+    border: 1px solid #c5c5c5;
+    background: white;
+}

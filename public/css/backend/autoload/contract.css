@@ -1,0 +1,46 @@
+#avatar {
+    text-align: center;
+}
+
+/*#avatar.dropzone .dz-preview .dz-image {*/
+/*width: 300px;*/
+/*height: 300px;*/
+/*}*/
+
+/*#avatar.dropzone .dz-preview .dz-details {*/
+/*top: 190px;*/
+/*}*/
+
+/*#avatar.dropzone .dz-preview.dz-image-preview {*/
+/*margin: 0;*/
+/*}*/
+
+/*.dz-image img {*/
+/*width: 100%;*/
+/*height: 100%;*/
+/*}*/
+
+.contract.card-box {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-bottom: 0px;
+}
+
+.contract.card-box.submit div {
+    margin: 0 auto;
+}
+
+.contract-header {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.content-body {
+    max-width: 1000px;
+}
+
+.card-box.confirm-display,
+.card-box.form-display {
+    height: calc(100vh - 120px);
+}

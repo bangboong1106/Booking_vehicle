@@ -1,0 +1,24 @@
+.wrap-spreadsheet {
+  height: 100vh;
+  max-width: 1600px;
+  overflow-x: scroll;
+  padding: 8px;
+}
+.btn-import {
+  margin-right: 16px;
+  border-radius: 4px;
+  width: 150px;
+  background: white;
+  border: 1px solid #c5c5c5;
+}
+.btn-export {
+  margin-right: 8px;
+  border-radius: 4px;
+  width: 150px;
+  background: white;
+  border: 1px solid #c5c5c5;
+}
+.clockpicker-popover.popover {
+  width: auto !important;
+  pointer-events: initial;
+}

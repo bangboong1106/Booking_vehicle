@@ -1,0 +1,1 @@
+{{ $entities->appends(Request::all())->links('backend.order_customer_board._customer_paging')}}

@@ -1,0 +1,1 @@
+<strong style="color: blue">Chọn tệp</strong><span class="box__dragndrop" style="color: black"> hoặc kéo thả tệp vào vùng này</span>.

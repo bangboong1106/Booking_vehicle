@@ -1,0 +1,72 @@
+#modal_show .modal-body {
+  padding: 0px !important;
+}
+
+#modal_show .modal-body > div.col-md-12 {
+  padding: 0px;
+}
+
+.status {
+  padding: 8px;
+  border-radius: 4px;
+}
+
+#detail-panel .timeline.location:before {
+  margin-top: 0px;
+  margin-bottom: 50px;
+}
+
+.quota-name {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 4px;
+  color: white;
+  background-color: #0c7cd5;
+}
+
+.content-body {
+  max-width: 1200px;
+}
+
+.pointer {
+  pointer-events: none;
+}
+
+.add-cost-wrap {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+}
+
+.add-cost-wrap .btn {
+  border: 1px solid #cfcfcf;
+  padding: 8px 16px;
+  width: 120px;
+  border-radius: 4px;
+}
+.numberCircle {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+
+  background: #fff;
+  border: 2px solid #666;
+  color: #666;
+  text-align: center;
+
+  font: 24 Arial, sans-serif;
+}
+.customer-name-wrap {
+  display: inherit;
+  vertical-align: middle;
+  margin: auto;
+}
+.customer-name-label{
+    margin: auto 0;
+    padding: 8px 6px;
+    font-size: 16px;
+}
+.table-scroll {
+  height: calc(100vh - 220px);
+}

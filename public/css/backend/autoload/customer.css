@@ -1,0 +1,27 @@
+.radio label {
+    font-size: 1rem;
+    margin-left: 8px;
+}
+
+.radio label::before {
+    top: 4px;
+}
+
+.radio label::after {
+    top: 7px;
+}
+
+.table-scroll.deleted-table thead th:nth-child(2),
+.table-scroll.deleted-table thead th:nth-child(3) {
+    z-index: unset;
+    left: unset;
+}
+
+.table-scroll.deleted-table td:nth-child(2),
+.table-scroll.deleted-table td:nth-child(3) {
+    position: inherit;
+}
+
+.content-body {
+    max-width: 1000px;
+}

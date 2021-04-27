@@ -1,0 +1,208 @@
+#divDetail::-webkit-scrollbar, .btn-config-group::-webkit-scrollbar {
+    width: 5px;
+}
+
+#divDetail::-webkit-scrollbar-track, .btn-config-group::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#divDetail::-webkit-scrollbar-thumb, .btn-config-group::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+#divDetail::-webkit-scrollbar-thumb:hover, .btn-config-group::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#divDetail > div.col-md-12 {
+    padding-left: 0;
+}
+
+.width-related-list .list-group-item {
+    padding: 0;
+}
+
+.modal .width-related-list {
+    margin-left: 200px;
+    margin-right: 0;
+    margin-top: 46px;
+    height: 100%;
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+}
+
+.modal .detailViewCollapse.dvLeftPanel_show {
+    left: 200px;
+}
+
+.modal .detailViewCollapse.dvLeftPanel_close {
+    left: 0;
+}
+
+.detailViewCollapse.dvLeftPanel_show {
+    right: calc(100% - 205px);
+
+}
+
+.detailViewCollapse.dvLeftPanel_close {
+    right: calc(100% - 10px);
+}
+
+.fCollapseIn {
+    width: 4px;
+    height: 9px;
+    background-position: -277px -597px;
+}
+
+.fCollapseOut {
+    width: 4px;
+    height: 9px;
+    background-position: -287px -597px;
+}
+
+.svgIcons {
+    background-image: url(//img.zohostatic.com/crm/images/svgicons_6f4f9_.svg);
+    background-repeat: no-repeat;
+}
+
+.dIB {
+    display: inline-block;
+}
+
+.collapse-view {
+    width: 10px;
+    background: #b4b4b4;
+    text-align: center;
+    line-height: 40px;
+    max-height: 40px;
+    top: 50%;
+    position: fixed;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.modal .modal-fullscreen .related-list {
+    max-height: calc(100vh - 88px);
+    overflow-y: auto;
+    height: calc(100vh - 88px);
+}
+
+.modal .modal-fullscreen .related-list .list-related-list {
+    max-height: calc(100vh - 88px);
+    overflow-y: auto;
+    height: calc(100vh - 88px);
+}
+
+.modal .related-list .list-related-list {
+    width: 200px;
+    max-height: calc(100vh - 120px);
+    height: 100%;
+}
+
+.modal .related-list {
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    padding-top: 48px;
+}
+
+.modal .related-list ul {
+    padding: 4px;
+    margin: 0 auto;
+    list-style-type: none;
+    background-color: #f7f7f7;
+}
+
+.modal .related-list ul .title {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.modal .related-list li {
+    padding: 3px 0;
+}
+
+.modal-body.content-history {
+    min-height: 250px;
+}
+
+.modal-body.content-history #content_order_history {
+    min-height: 220px;
+}
+
+.modal-body.content-history #content_order_history p {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#detail-panel {
+    width: 100%;
+    display: none;
+}
+
+#detail-panel.active {
+    display: block;
+    -webkit-animation-name: DropDownSlide;
+    animation-name: DropDownSlide;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+#detail-panel.close {
+    -webkit-animation-name: DropUpSlide;
+    animation-name: DropUpSlide;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+#detail-panel.active .toolbar-detail {
+    position: fixed;
+}
+
+.list-group-item.detail-info {
+    border: none;
+    padding: 0;
+}
+
+.list-group-item.detail-info > .row {
+    margin: 0px;
+}
+
+.first.list-group-item {
+    margin-top: 42px;
+}
+
+.first.card-header {
+    margin-top: 16px;
+}
+
+#modal_show {
+    min-height: 200px;
+}
+
+#modal_show .width-related-list .list-group .list-group-item.detail-info {
+    position: unset;
+}
+
+#modal_show .toolbar-detail {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+#modal_show .collapse-view {
+    position: absolute;
+}
+
+#divDetail .list-group-item {
+    border: none;
+}

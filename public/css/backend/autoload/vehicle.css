@@ -1,0 +1,32 @@
+.text-center {
+    vertical-align: middle !important;
+}
+
+.text-center p {
+    color: #0c7cd5;
+    margin-top: 15px !important;
+}
+
+.modal-full {
+    width: 80%;
+    max-width: 100%;
+}
+
+.table-scroll.deleted-table thead th:nth-child(2),
+.table-scroll.deleted-table thead th:nth-child(3) {
+    z-index: unset;
+    left: unset;
+}
+
+.table-scroll.deleted-table td:nth-child(2),
+.table-scroll.deleted-table td:nth-child(3) {
+    position: inherit;
+}
+
+.tab-content {
+    max-width: 1000px;
+}
+
+.driver-detail {
+    margin: 0 2px;
+}

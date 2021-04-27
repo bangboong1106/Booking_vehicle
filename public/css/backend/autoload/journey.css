@@ -1,0 +1,117 @@
+#journey_map {
+  width: 100%;
+  height: calc(100vh - 150px);
+}
+
+.menu {
+  width: 150px;
+  box-shadow: 3px 3px 5px #888888;
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  border-radius: 2px;
+  position: fixed;
+  display: none;
+}
+
+.menu-item {
+  padding: 5px 10px;
+  background-color: white;
+  color: #212529;
+}
+
+.menu-item .fa {
+  margin-right: 12px;
+}
+
+.menu-item:hover {
+  color: #16181b;
+  text-decoration: none;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.journey-vehicle-item {
+  list-style: none;
+  /* border-bottom: 1px solid #cfcfcf; */
+}
+
+.journey-vehicle-item:hover,
+.journey-vehicle-item.active {
+  cursor: pointer;
+  background-color: #b1f2b1;
+}
+
+.journey-vehicle-item p {
+  margin-bottom: 0;
+}
+
+.journey-vehicle-item span {
+  font-size: 13px;
+}
+.journey-vehicle-item span.status {
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 1px;
+  color: white;
+  background-color: #28a745;
+}
+.journey-vehicle-item span.status.fail {
+  background-color: black;
+}
+.journey-vehicle-item span.status.drive {
+  background-color: gray;
+}
+.detail-item-sep {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  margin: 5px 0 5px 5px;
+  height: 1px;
+  list-style: none;
+}
+
+.vehicle-plate {
+  width: 100px;
+  height: 20px;
+  border: 1px solid #eb3a44;
+  border-radius: 5px;
+  background: #fee1d7;
+  color: #eb3a44;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  opacity: 1 !important;
+}
+
+.content-iw p {
+  margin-bottom: 0;
+}
+
+.content-iw span {
+  font-size: 16px;
+  color: #e41b23;
+  font-weight: bold;
+}
+
+.vehicle-list {
+  width: 98%;
+  padding-left: 8px;
+  overflow: hidden auto;
+  max-height: calc(100vh - 250px);
+}
+
+.collapse-bar {
+  color: #11509b;
+  padding: 5px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.filter {
+  width: 360px;
+  padding: 8px;
+}
+.journey-map {
+  width: calc(100% - 360px);
+  padding: 8px;
+}

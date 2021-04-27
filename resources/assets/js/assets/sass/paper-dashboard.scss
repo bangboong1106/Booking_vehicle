@@ -1,0 +1,101 @@
+/*!
+
+ =========================================================
+ * Paper Dashboard - v1.1.2
+ =========================================================
+
+ * Product Page: http://www.creative-tim.com/product/paper-dashboard
+ * Copyright 2017 Creative Tim (http://www.creative-tim.com)
+ * Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard/blob/master/LICENSE.md)
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+ */
+@import "paper/variables";
+@import "paper/mixins";
+@import "paper/typography";
+// Core CSS
+@import "paper/misc";
+@import "paper/sidebar-and-main-panel";
+@import "paper/buttons";
+@import "paper/inputs";
+@import "paper/alerts";
+@import "paper/tables";
+@import "paper/checkbox-radio";
+@import "paper/navbars";
+@import "paper/footers";
+@import "paper/view";
+@import "paper/notify";
+@import "paper/labels";
+// Fancy Stuff
+@import "paper/dropdown";
+@import "paper/cards";
+@import "paper/chartist";
+@import "paper/responsive";
+@import "paper/datepicker";
+
+//general color
+$primary-color : rgb(0, 177, 79)!important;
+$second-color : rgb(253, 110, 9);
+
+@mixin button-bg($bg) {
+  background: $bg;
+  &:hover {
+    background: darken($bg, 8%);
+    transition: all 0.3s ease;
+  }
+  &:active {
+    background: darken($bg, 25%);
+  }
+}
+@mixin background-color-primary($bg){
+  background: $bg;
+  border-color: $bg;
+}
+@mixin color-primary($bg){
+  color: $bg;
+}
+.btn-base {
+  color: white;
+  text-decoration: none;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  line-height: 30px;
+  width: 100%;
+}
+.container {
+  max-width: 1200px;
+  margin : 0 auto;
+}
+.btn-addcart {
+  @include button-bg(rgb(0, 177, 79));
+}
+
+.btn-order {
+  @include button-bg($second-color);
+}
+
+.btn-delete {
+  @include button-bg(#fff);
+  color: #757373;
+}
+
+.btn-new {
+  @include button-bg($second-color);
+}
+
+.btn-old {
+  @include button-bg(rgb(0, 177, 79));
+}
+
+.primary-color {
+  @include color-primary($primary-color);
+}
+.primary-background-color{
+  @include background-color-primary($primary-color);
+}
+

@@ -1,0 +1,429 @@
+#section-guide .container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+#ection-guide .reason-item-title {
+    font-size: 24px;
+}
+
+@media screen and (min-width: 1400px) {
+    #section-guide .container {
+        max-width: 1400px
+    }
+}
+
+.carousel--mobileview {
+}
+
+.carousel--mobileview .carousel-indicators {
+    position: static;
+}
+
+.carousel--mobileview .carousel-indicators li,
+.carousel--mobileview .carousel-indicators li.active {
+    width: 100%;
+    height: 130px;
+    text-align: left;
+    background: none;
+    border: none;
+}
+
+.carousel--mobileview .carousel-indicators li {
+    text-indent: 0;
+    position: relative;
+    font-size: 1.143em;
+}
+
+.carousel--mobileview .carousel-indicators li:before {
+    content: '';
+    display: block;
+    position: absolute;
+}
+
+.carousel--mobileview .carousel-indicators li:last-child:before {
+    display: none
+}
+
+.carousel--mobileview .carousel-indicators li:after {
+    content: attr(data-step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #11509b;
+    font-weight: 500;
+    font-size: 1em;
+    color: #11509b;
+    text-align: center;
+    line-height: 29px;
+}
+
+.carousel--mobileview .carousel-indicators li.active:after,
+.carousel--mobileview .carousel-indicators li:hover:after {
+    background: #11509b;
+    color: #fff;
+}
+
+.carousel--mobileview .carousel-indicators li h4 {
+    font-weight: 700;
+    margin-top: 5px
+}
+
+.carousel--mobileview .carousel-indicators li.active h4,
+.carousel--mobileview .carousel-indicators li:hover h4 {
+    color: #11509b
+}
+
+.carousel--mobileview .carousel-indicators li p {
+    display: block;
+}
+
+.carousel--mobileview .carousel-inner {
+    position: absolute;
+    left: 50%;
+    overflow: hidden
+}
+
+.carousel--mobileview .carousel-inner .item {
+    position: static;
+    width: 100% !important;
+}
+
+.carousel--mobileview .carousel-bg {
+    background: url(/css/frontend/img/phone.png) no-repeat center/cover;
+    position: absolute;
+    left: 50%;
+    z-index: 9;
+}
+
+
+.carousel--desktopview {
+}
+
+.carousel--desktopview .carousel-indicators {
+    position: static;
+}
+
+.carousel--desktopview .carousel-indicators li,
+.carousel--desktopview .carousel-indicators li.active {
+    width: 100%;
+    height: auto !important;
+    text-align: center;
+    border: 1px solid #CCD6DD;
+    background: #F7F9FB;
+    border-radius: 0
+}
+
+.carousel--desktopview .carousel-indicators li.active {
+    border-color: #38C564;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    color: #38C564;
+}
+
+.carousel--desktopview .carousel-indicators li {
+    text-indent: 0;
+    position: relative;
+    font-size: 1.143em;
+}
+
+.carousel--desktopview .carousel-indicators li:before {
+    content: '';
+    display: block;
+    position: absolute;
+}
+
+.carousel--desktopview .carousel-indicators li:last-child:before {
+    display: none
+}
+
+.carousel--desktopview .carousel-indicators li h4 {
+    font-weight: 700;
+    margin-top: 5px
+}
+
+.carousel--desktopview .carousel-indicators li.active h4,
+.carousel--desktopview .carousel-indicators li:hover h4 {
+    color: #11509b
+}
+
+.carousel--desktopview .carousel-indicators li p {
+    display: block;
+}
+
+.carousel--desktopview .carousel-inner {
+    position: absolute;
+    right: 50%;
+    overflow: hidden
+}
+
+.carousel--desktopview .carousel-inner .item {
+    position: static;
+    width: 100% !important;
+}
+
+.carousel--desktopview .carousel-bg {
+    background: url(/css/frontend/img/bg-imac.png) no-repeat center/cover;
+    position: absolute;
+    right: 50%;
+    z-index: 9;
+}
+
+.carousel-fade .carousel-inner .item {
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
+}
+
+.carousel-fade .carousel-inner .active {
+    opacity: 1;
+}
+
+
+@media screen and (min-width: 768px) {
+    .carousel--mobileview {
+        min-height: 580px
+    }
+
+    .carousel--mobileview .carousel-indicators {
+        float: right
+    }
+
+    .carousel--mobileview .carousel-indicators {
+        width: 50% !important
+    }
+
+    .carousel--mobileview .carousel-indicators li {
+        padding: 0 0 10px 45px
+    }
+
+    .carousel--mobileview .carousel-indicators li:before {
+        width: 13px;
+        height: 92px;
+        background: url(/css/frontend/img/arrowdown.png) no-repeat center/cover;
+        bottom: 5px;
+        left: 8px;
+    }
+
+    .carousel--mobileview .carousel-bg {
+        top: 0px;
+        margin-left: -400px;
+        width: 400px;
+        height: 580px;
+    }
+
+    .carousel--mobileview .carousel-inner {
+        top: 68px;
+        margin-left: -290px;
+        width: 210px !important;
+        height: 365px;
+    }
+
+    .carousel--desktopview {
+        min-height: 450px
+    }
+
+    .carousel--desktopview .carousel-indicators {
+        float: left;
+        margin-left: 0;
+    }
+
+    .carousel--desktopview .carousel-indicators {
+        width: 40% !important
+    }
+
+    .carousel--desktopview .carousel-indicators li {
+        padding: 10px 12px;
+        margin-bottom: 50px
+    }
+
+    .carousel--desktopview .carousel-indicators li:before {
+        width: 1px;
+        height: 30px;
+        background-color: #38C564;
+        bottom: -40px;
+        left: 50%;
+    }
+
+    .carousel--desktopview .carousel-bg {
+        top: 0px;
+        margin-right: -550px;
+        width: 538px;
+        height: 429px;
+    }
+
+    .carousel--desktopview .carousel-inner {
+        top: 20px;
+        margin-right: -522px;
+        width: 483px !important;
+        height: 275px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .carousel--mobileview {
+        min-height: 540px
+    }
+
+    .carousel--mobileview .carousel-indicators {
+        margin-left: 10%;
+        width: 90%
+    }
+
+    .carousel--mobileview .carousel-indicators li {
+        float: left
+    }
+
+    .carousel--mobileview .carousel-indicators.steps--2 li {
+        width: 50%
+    }
+
+    .carousel--mobileview .carousel-indicators.steps--3 li {
+        width: 33%
+    }
+
+    .carousel--mobileview .carousel-indicators.steps--4 li {
+        width: 25%
+    }
+
+    .carousel--mobileview .carousel-indicators.steps--5 li {
+        width: 20%
+    }
+
+    .carousel--mobileview .carousel-indicators li {
+        padding: 0;
+        margin: 0 !important;
+    }
+
+    .carousel--mobileview .carousel-indicators li h4,
+    .carousel--mobileview .carousel-indicators li p {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        display: none
+    }
+
+    .carousel--mobileview .carousel-indicators li:before {
+        font-family: FontAwesome;
+        content: "\f061";
+        top: 5px;
+        right: 30%;
+        color: #333;
+    }
+
+    .carousel--mobileview .carousel-bg {
+        top: 148px;
+        margin-left: -135px;
+        width: 270px;
+        height: 392px;
+    }
+
+    .carousel--mobileview .carousel-inner {
+        top: 195px;
+        margin-left: -61px;
+        width: 142px !important;
+        height: 248px;
+    }
+
+    .carousel--mobileview .carousel-description {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        text-align: center;
+    }
+
+    .carousel--mobileview .carousel-description h4 {
+        font-weight: 700;
+        margin-top: 5px;
+        color: #11509b
+    }
+
+    .carousel--desktop {
+        min-height: 540px
+    }
+
+    .carousel--desktop .carousel-indicators {
+        margin-left: 10%;
+        width: 90%
+    }
+
+    .carousel--desktop .carousel-indicators li {
+        float: left
+    }
+
+    .carousel--desktop .carousel-indicators.steps--2 li {
+        width: 50%
+    }
+
+    .carousel--desktop .carousel-indicators.steps--3 li {
+        width: 33%
+    }
+
+    .carousel--desktop .carousel-indicators.steps--4 li {
+        width: 25%
+    }
+
+    .carousel--desktop .carousel-indicators.steps--5 li {
+        width: 20%
+    }
+
+    .carousel--desktop .carousel-indicators li {
+        padding: 0;
+        margin: 0 !important;
+    }
+
+    .carousel--desktop .carousel-indicators li h4,
+    .carousel--desktop .carousel-indicators li p {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        display: none
+    }
+
+    .carousel--desktop .carousel-indicators li:before {
+        font-family: FontAwesome;
+        content: "\f061";
+        top: 5px;
+        right: 30%;
+        color: #333;
+    }
+
+    .carousel--desktop .carousel-bg {
+        top: 150px;
+        margin-left: -135px;
+        width: 270px;
+        height: 392px;
+    }
+
+    .carousel--desktop .carousel-inner {
+        top: 195px;
+        margin-left: -61px;
+        width: 142px !important;
+        height: 248px;
+    }
+
+    .carousel--desktop .carousel-description {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        text-align: center;
+    }
+
+    .carousel--desktop .carousel-description h4 {
+        font-weight: 700;
+        margin-top: 5px;
+        color: #11509b
+    }
+}

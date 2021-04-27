@@ -1,0 +1,26 @@
+.nav.nav-tabs.tabs-bordered {
+  background: white;
+}
+
+.tab-content {
+  padding: 0px;
+}
+.btn.l-create {
+  color: white;
+  background: #11509b;
+  margin: 8px;
+}
+.content-body {
+  max-width: 600px;
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+  height: calc(100vh - 120px);
+}
+.form-display {
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+  height: calc(100vh - 120px);
+}
+.table-cost .header {
+  font-weight: bold;
+}

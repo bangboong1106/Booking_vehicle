@@ -1,0 +1,146 @@
+/* Fast order popup*/
+.fast-order-form .hide {
+    display: none;
+}
+
+.fast-order-form .code-config {
+    width: 40%;
+    float: left;
+}
+
+.fast-order-form .code-config .select2-container--default .select2-selection--single {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.fast-order-form .order-code {
+    width: 60%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    height: 36px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.fast-order-form label.order-status-select {
+    display: block;
+    padding: 15px 10px 15px 35px;
+    cursor: pointer;
+}
+
+.fast-order-form label.order-status-select input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.fast-order-form label.order-status-select span:after {
+    top: 2px;
+    left: 2px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #67d1f8;
+    content: "";
+    position: absolute;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity .1s cubic-bezier(.8, -.33, .2, 1.33);
+}
+
+.fast-order-form label.order-status-select input:checked ~ span:after {
+    opacity: 1;
+}
+
+.fast-order-form label.order-status-select span {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    border: 1px solid #80898e;
+    background-color: #fff;
+}
+
+#modal_add .modal-body {
+    overflow-y: auto;
+}
+
+.fast-order-form [data-toggle="collapse"] .fa {
+    color: #bfc3c5;
+}
+
+.fast-order-form [data-toggle="collapse"] .fa:before {
+    content: "\f139";
+}
+
+.fast-order-form [data-toggle="collapse"].collapsed .fa:before {
+    content: "\f13a";
+}
+
+.fast-order-form .card-header {
+    padding: 0;
+    border: none;
+    margin-bottom: 16px;
+    margin-top: 8px;
+}
+
+.fast-order-form .card-header h5 {
+    margin-left: 0 !important;
+}
+
+.fast-order-form .advanced .selection > span {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-right: 1px solid #cfcfcf;
+}
+
+.fast-order-form .card-box {
+    padding: 0 4px;
+    margin-bottom: 0;
+    border: 1px solid rgba(54, 64, 74, .08);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+}
+
+.fast-order-form .card-box.container-card-box {
+    margin-top: 40px;
+    border: none;
+}
+
+#modal_add .fast-order-form .card-box .submit-button {
+    border-bottom: 1px solid rgba(54, 64, 74, .08);
+}
+
+@media only screen and (min-width: 375px) and (max-width: 750px) {
+    .fast-order-form label.order-status-select {
+        margin: 4px;
+    }
+
+    .fast-order-form .timepicker.form-control {
+        margin: 4px 0px;
+    }
+
+    #modal_add .modal-body {
+        overflow-y: scroll;
+    }
+
+    .fast-order-form .header-title {
+        display: none;
+    }
+
+    .fast-order-form .submit-button {
+        position: fixed;
+        bottom: -40px;
+        top: auto;
+        padding: 0 !important;
+    }
+
+    .modal-fullscreen .fast-order-form .submit-button {
+        bottom: 0;
+    }
+
+}

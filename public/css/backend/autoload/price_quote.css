@@ -1,0 +1,23 @@
+.content-body {
+  max-width: 1200px;
+}
+
+#detail-panel .content-body {
+  max-width: 100%;
+}
+
+.panel-group {
+  display: none;
+}
+
+.panel-group.active {
+  margin-top: 5px;
+  display: block;
+}
+
+.panel-group.active span {
+  padding: 5px;
+}
+.btn-plus {
+  border: 1px solid #11509b;
+}

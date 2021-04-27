@@ -1,0 +1,1 @@
+{{ $entities->appends(Request::all())->links('backend.order_board._vehicle_paging')}}

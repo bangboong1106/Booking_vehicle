@@ -1,0 +1,100 @@
+/* The side navigation menu */
+.sidenav {
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    top: 0; /* Stay at the top */
+    right: 0;
+    border: 1px solid #d0d0d0;
+    background-color: white; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    text-decoration: none;
+}
+
+.sidenav .header {
+    background: #11509b;
+    height: 36px;
+    vertical-align: middle;
+    margin: 0 auto;
+    padding: 4px;
+    color: white;
+}
+
+.sidenav .header a {
+    color: white;
+}
+
+.sidenav .header-detail-panel {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.sidenav #divDetail {
+    height: calc(100vh - 36px);
+    overflow-y: auto;
+}
+
+.sidenav #divDetail .width-related-list {
+    margin-left: 195px;
+    margin-top: 48px;
+    height: calc(100vh - 90px);
+    overflow: auto;
+}
+
+.sidenav #divDetail .related-list {
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 36px;
+    max-height: calc(100vh - 36px);
+    height: calc(100vh - 36px);
+    overflow: auto;
+    padding-top: 48px;
+}
+
+.sidenav #divDetail .related-list .list-related-list {
+    width: 195px;
+    max-height: calc(100vh - 90px);
+    height: calc(100vh - 90px);
+    left: 0;
+}
+
+.sidenav #divDetail .related-list ul {
+    padding: 4px;
+    margin: 0 auto;
+    list-style-type: none;
+    background-color: #f7f7f7;
+}
+
+.sidenav #divDetail .related-list ul .title {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.sidenav #divDetail .related-list li {
+    padding: 3px 0;
+}
+
+.sidenav .info {
+    float: left;
+    display: inline-block;
+    margin: 4px;
+}
+
+.sidenav .action {
+    float: right;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    margin-right: 8px;
+    font-size: 16px;
+    padding: 4px;
+}

@@ -1,0 +1,793 @@
+<?php
+$supportCarTransportation = env('SUPPORT_CAR_TRANSPORTATION', false);
+
+$order = [
+    ['attribute' => 'order_code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+    ['attribute' => 'status', 'show' => true, 'data_type' => 'list', 'list' => config('system.c20_order_status_search'), 'function' => 'getStatusOnList', 'default_width' => 200],
+    ['attribute' => 'order_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+
+];
+
+if ($supportCarTransportation) {
+    array_push(
+        $order,
+        ['attribute' => 'model_no', 'show' => false, 'data_type' => 'string', 'default_width' => 170],
+        ['attribute' => 'vin_no', 'show' => false, 'data_type' => 'string', 'default_width' => 170]
+    );
+}
+
+array_push(
+    $order,
+    ['attribute' => 'name_of_partner_id', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'vehicle', 'show' => true, 'data_type' => auth()->user()->can('view vehicle') ? 'link' : 'string', 'field' => 'reg_no', 'list_field' => 'reg_no', 'entity' => 'vehicle', 'link_field' => 'vehicle_id', 'default_width' => 250],
+    ['attribute' => 'primary_driver', 'show' => true, 'data_type' => auth()->user()->can('view driver') ? 'link' : 'string', 'field' => 'driver_name', 'entity' => 'driver', 'list_field' => 'driver_name', 'link_field' => 'primary_driver_id', 'default_width' => 250],
+    ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => auth()->user()->can('view customer') ? 'link' : 'string', 'entity' => 'customer', 'list_field' => 'customer_full_name', 'link_field' => 'customer_id', 'default_width' => 300],
+    ['attribute' => 'name_of_client_id', 'show' => true, 'data_type' => auth()->user()->can('view customer') ? 'link' : 'string', 'entity' => 'customer', 'link_field' => 'client_id', 'default_width' => 300],
+    ['attribute' => 'location_destination', 'show' => true, 'data_type' => 'location', 'list_field' => 'name_of_location_destination_id', 'default_width' => 250],
+    ['attribute' => 'location_arrival', 'show' => true, 'data_type' => 'location', 'list_field' => 'name_of_location_arrival_id', 'default_width' => 250],
+    ['attribute' => 'ETD', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETD_date', 'list_field' => 'ETD_date|ETD_time', 'default_width' => 200],
+    ['attribute' => 'ETA', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETA_date', 'list_field' => 'ETA_date|ETA_time', 'default_width' => 200],
+    ['attribute' => 'amount', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+
+    ['attribute' => 'name_of_vehicle_group_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+
+    ['attribute' => 'name_of_province_destination_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'name_of_province_arrival_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+
+    ['attribute' => 'name_of_district_destination_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'name_of_district_arrival_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+
+    ['attribute' => 'number_of_delivery_points', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'number_of_arrival_points', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'bill_no', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+    ['attribute' => 'customer_name', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+    ['attribute' => 'is_merge_item', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300],
+    ['attribute' => 'precedence', 'show' => false, 'data_type' => 'list', 'list' => config('system.order_precedences'), 'function' => 'getPrecedenceOnList', 'default_width' => 150],
+    ['attribute' => 'order_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+    ['attribute' => 'cod_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 220],
+    ['attribute' => 'commission_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'quantity', 'show' => false, 'data_type' => 'number', 'field' => 'quantity', 'default_width' => 200],
+    ['attribute' => 'volume', 'show' => false, 'data_type' => 'number', 'field' => 'volume', 'default_width' => 200],
+    ['attribute' => 'weight', 'show' => false, 'data_type' => 'number', 'field' => 'weight', 'default_width' => 200],
+    /*  ['attribute' => 'quantity_order_customer', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+      ['attribute' => 'volume_order_customer', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+      ['attribute' => 'weight_order_customer', 'show' => false, 'data_type' => 'number', 'default_width' => 200],*/
+    ['attribute' => 'ETD_reality', 'show' => false, 'data_type' => 'datetime', 'field' => 'ETD_date_reality', 'list_field' => 'ETD_date_reality|ETD_time_reality', 'default_width' => 250],
+    ['attribute' => 'contact_mobile_no_destination', 'show' => false, 'data_type' => 'phone', 'default_width' => 250],
+    ['attribute' => 'contact_name_destination', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+    ['attribute' => 'loading_destination_fee', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+    ['attribute' => 'ETA_reality', 'show' => false, 'data_type' => 'datetime', 'field' => 'ETA_date_reality', 'list_field' => 'ETA_date_reality|ETA_time_reality', 'default_width' => 250],
+    ['attribute' => 'contact_mobile_no_arrival', 'show' => false, 'data_type' => 'phone', 'default_width' => 250],
+    ['attribute' => 'contact_name_arrival', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+    ['attribute' => 'loading_arrival_fee', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+    ['attribute' => 'customer_mobile_no', 'show' => false, 'data_type' => 'phone', 'default_width' => 200],
+    ['attribute' => 'note', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+    ['attribute' => 'is_collected_documents', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300],
+    ['attribute' => 'status_collected_documents', 'show' => false, 'data_type' => 'list', 'list' => config('system.collected_documents_status'), 'function' => 'getStatusDocuments', 'default_width' => 300],
+    ['attribute' => 'date_collected_documents', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+    ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+    ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+    ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200],
+    ['attribute' => 'payment_type', 'show' => false, 'data_type' => 'list', 'list' => config('system.order_payment_type'), 'list_field' => 'payment_type_title', 'default_width' => 200],
+    ['attribute' => 'name_of_payment_user_id', 'show' => false, 'data_type' => 'string', 'field' => 'payment_user_id', 'list_field' => 'pu_username', 'default_width' => 250],
+    ['attribute' => 'vat', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 100],
+    ['attribute' => 'goods_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'anonymous_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'is_insured_goods', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300]
+);
+
+$order_customer = [
+    ['attribute' => 'order_no', 'show' => true, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+    ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'default_width' => 180],
+    ['attribute' => 'name', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+];
+
+if ($supportCarTransportation) {
+    array_push(
+        $order_customer,
+        ['attribute' => 'model_nos', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'vin_nos', 'show' => false, 'data_type' => 'string', 'default_width' => 250]
+    );
+}
+array_push(
+    $order_customer,
+    ['attribute' => 'status', 'show' => true, 'data_type' => 'list', 'list' => config('system.order_customer_status'), 'function' => 'getStatusOnList', 'default_width' => 200],
+    ['attribute' => 'status_goods', 'show' => true, 'data_type' => 'list', 'list' => config('system.order_customer_status_goods'), 'function' => 'getStatusGoods', 'default_width' => 200],
+    ['attribute' => 'order_date', 'show' => true, 'data_type' => 'date', 'default_width' => 200],
+    ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'link', 'entity' => 'customer', 'link_field' => 'customer_id', 'default_width' => 250],
+    ['attribute' => 'customer_name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'customer_mobile_no', 'show' => true, 'data_type' => 'phone', 'default_width' => 250],
+    ['attribute' => 'name_of_client_id', 'show' => true, 'data_type' => 'link', 'entity' => 'customer', 'link_field' => 'client_id', 'default_width' => 250],
+    ['attribute' => 'ETD_date_reality', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETD_date_reality|ETD_time_reality', 'default_width' => 250],
+    ['attribute' => 'ETA_date_reality', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETA_date_reality|ETA_time_reality', 'default_width' => 250],
+    ['attribute' => 'ETD_date', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETD_date|ETD_time', 'default_width' => 250],
+    ['attribute' => 'ETA_date', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETA_date|ETA_time', 'default_width' => 250],
+    ['attribute' => 'name_of_location_destination_id', 'show' => true, 'data_type' => 'location', 'default_width' => 220],
+    ['attribute' => 'name_of_location_arrival_id', 'show' => true, 'data_type' => 'location', 'default_width' => 200],
+    ['attribute' => 'amount', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'amount_estimate', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'goods_amount', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'weight', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'volume', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'distance', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'count_order', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+
+    ['attribute' => 'commission_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'quantity', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'route_number', 'show' => true, 'data_type' => 'number', 'default_width' => 300],
+    ['attribute' => 'name_of_province_destination_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'name_of_province_arrival_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'name_of_district_destination_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'name_of_district_arrival_id', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+    ['attribute' => 'payment_type', 'show' => false, 'data_type' => 'list', 'list' => config('system.order_payment_type'), 'function' => 'getPaymentType', 'default_width' => 200],
+    ['attribute' => 'name_of_payment_user_id', 'show' => false, 'data_type' => 'string', 'field' => 'payment_user_id', 'list_field' => 'pu_username', 'default_width' => 250],
+    ['attribute' => 'vat', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 100],
+    ['attribute' => 'anonymous_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+    ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+    ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+    ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+);
+return [
+    'order' => $order,
+    'document' => [
+        ['attribute' => 'order_code', 'show' => false, 'data_type' => 'link', 'is_sticky' => true, 'entity' => 'order', 'link_field' => 'id', 'default_width' => 200],
+        ['attribute' => 'order_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+        ['attribute' => 'vehicle', 'show' => true, 'data_type' => 'link', 'field' => 'reg_no', 'list_field' => 'reg_no', 'entity' => 'vehicle', 'link_field' => 'vehicle_id', 'default_width' => 150],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'link', 'entity' => 'customer', 'link_field' => 'customer_id', 'default_width' => 300],
+        ['attribute' => 'primary_driver', 'show' => true, 'data_type' => 'link', 'field' => 'driver_name', 'list_field' => 'driver_name', 'entity' => 'driver', 'link_field' => 'driver_id', 'default_width' => 250],
+        ['attribute' => 'is_collected_documents', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300],
+        ['attribute' => 'status_collected_documents', 'show' => true, 'data_type' => 'list', 'list' => config('system.collected_documents_status'), 'function' => 'getStatusDocumentsOnList', 'default_width' => 300],
+        ['attribute' => 'date_collected_documents', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'date_collected_documents|time_collected_documents', 'default_width' => 200],
+        ['attribute' => 'date_collected_documents_reality', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'date_collected_documents_reality|time_collected_documents_reality', 'default_width' => 300],
+        ['attribute' => 'ETD', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETD_date', 'list_field' => 'ETD_date|ETD_time', 'default_width' => 200],
+        ['attribute' => 'ETD_reality', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETD_date_reality', 'list_field' => 'ETD_date_reality|ETD_time_reality', 'default_width' => 250],
+        ['attribute' => 'ETA', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETA_date', 'list_field' => 'ETA_date|ETA_time', 'default_width' => 200],
+        ['attribute' => 'ETA_reality', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETA_date_reality', 'list_field' => 'ETA_date_reality|ETA_time_reality', 'default_width' => 250],
+        ['attribute' => 'name_of_location_destination_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_location_arrival_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+
+        ['attribute' => 'status', 'show' => false, 'data_type' => 'list', 'list' => config('system.order_status'), 'function' => 'getStatusOnList', 'default_width' => 200],
+        ['attribute' => 'num_of_document_page', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'document_type', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'document_note', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'vehicle' => [
+        ['attribute' => 'reg_no', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'name_of_group_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_group_id', 'default_width' => 250],
+        ['attribute' => 'name_of_partner_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_partner_id', 'list_field' => 'partner|full_name', 'default_width' => 250],
+        ['attribute' => 'drivers_name', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 300],
+        ['attribute' => 'weight', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'volume', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'length_width_height', 'show' => true, 'data_type' => 'number', 'list_field' => 'length/width/height', 'default_width' => 300],
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+
+
+        ['attribute' => 'status', 'show' => false, 'data_type' => 'list', 'list' => config('system.vehicle_status'), 'function' => 'getStatus', 'default_width' => 200],
+        ['attribute' => 'type', 'show' => false, 'data_type' => 'list', 'list' => config('system.vehicle_type'), 'function' => 'getType', 'default_width' => 200],
+        ['attribute' => 'active', 'show' => false, 'field' => 'vehicle|active', 'data_type' => 'list', 'list' => config('system.vehicle_active'), 'function' => 'getActive', 'default_width' => 200],
+        ['attribute' => 'current_location', 'show' => false, 'data_type' => 'string', 'list_field' => 'current_location', 'default_width' => 200],
+        ['attribute' => 'category_of_barrel', 'show' => false, 'data_type' => 'string', 'list_field' => 'category_of_barrel', 'default_width' => 200],
+        ['attribute' => 'weight_lifting_system', 'show' => false, 'data_type' => 'string', 'list_field' => 'weight_lifting_system', 'default_width' => 200],
+        ['attribute' => 'max_fuel', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+        ['attribute' => 'max_fuel_with_goods', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+        ['attribute' => 'register_year', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'brand', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'name_of_gps_company_id', 'show' => false, 'data_type' => 'string', 'list_field' => 'gpsCompany|name', 'default_width' => 200],
+        ['attribute' => 'repair_distance', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'repair_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'partner_vehicle' => [
+        ['attribute' => 'reg_no', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'name_of_group_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_group_id', 'list_field' => 'vehicleGroup|name', 'default_width' => 250],
+        ['attribute' => 'drivers_name', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 300],
+        ['attribute' => 'weight', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'volume', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'length_width_height', 'show' => true, 'data_type' => 'number', 'list_field' => 'length/width/height', 'default_width' => 300],
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+
+
+        ['attribute' => 'status', 'show' => false, 'data_type' => 'list', 'list' => config('system.vehicle_status'), 'function' => 'getStatus', 'default_width' => 200],
+        ['attribute' => 'type', 'show' => false, 'data_type' => 'list', 'list' => config('system.vehicle_type'), 'function' => 'getType', 'default_width' => 200],
+        ['attribute' => 'active', 'show' => false, 'field' => 'vehicle|active', 'data_type' => 'list', 'list' => config('system.vehicle_active'), 'function' => 'getActive', 'default_width' => 200],
+        ['attribute' => 'current_location', 'show' => false, 'data_type' => 'string', 'list_field' => 'current_location', 'default_width' => 200],
+        ['attribute' => 'category_of_barrel', 'show' => false, 'data_type' => 'string', 'list_field' => 'vehicleGeneralInfo|category_of_barrel', 'default_width' => 200],
+        ['attribute' => 'weight_lifting_system', 'show' => false, 'data_type' => 'string', 'list_field' => 'vehicleGeneralInfo|weight_lifting_system', 'default_width' => 200],
+        ['attribute' => 'max_fuel', 'show' => false, 'data_type' => 'number', 'list_field' => 'vehicleGeneralInfo|max_fuel', 'default_width' => 300],
+        ['attribute' => 'max_fuel_with_goods', 'show' => false, 'data_type' => 'number', 'list_field' => 'vehicleGeneralInfo|max_fuel_with_goods', 'default_width' => 300],
+        ['attribute' => 'register_year', 'show' => false, 'data_type' => 'string', 'list_field' => 'vehicleGeneralInfo|register_year', 'default_width' => 200],
+        ['attribute' => 'brand', 'show' => false, 'data_type' => 'string', 'list_field' => 'vehicleGeneralInfo|brand', 'default_width' => 200],
+        ['attribute' => 'name_of_gps_company_id', 'show' => false, 'data_type' => 'string', 'list_field' => 'gpsCompany|name', 'default_width' => 200],
+        ['attribute' => 'repair_distance', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'repair_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'customer' => [
+        ['attribute' => 'customer_code', 'show' => true, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'full_name', 'show' => true, 'data_type' => 'string', 'is_avatar' => true, 'default_width' => 250],
+        ['attribute' => 'mobile_no', 'show' => true, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'username', 'show' => true, 'data_type' => 'string', 'field' => 'username', 'list_field' => 'adminUser|username', 'default_width' => 200],
+        ['attribute' => 'email', 'show' => true, 'data_type' => 'string', 'list_field' => 'adminUser|email', 'default_width' => 200],
+        ['attribute' => 'delegate', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'tax_code', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'current_address', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'note', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'client' => [
+        ['attribute' => 'customer_code', 'show' => true, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'full_name', 'show' => true, 'data_type' => 'string', 'is_avatar' => true, 'default_width' => 250],
+        ['attribute' => 'name_of_parent_id', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'customer_group', 'list_field' => 'customer_group_name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'mobile_no', 'show' => true, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'type', 'show' => true, 'data_type' => 'list', 'list' => config('system.customer_type'), 'function' => 'getCustomerType', 'default_width' => 220],
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+
+        ['attribute' => 'username', 'show' => false, 'data_type' => 'string', 'field' => 'username', 'list_field' => 'adminUser|username', 'default_width' => 200],
+        ['attribute' => 'email', 'show' => false, 'data_type' => 'string', 'list_field' => 'adminUser|email', 'default_width' => 200],
+        ['attribute' => 'delegate', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'tax_code', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'birth_date', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'sex', 'show' => false, 'data_type' => 'list', 'list' => config('system.sex'), 'function' => 'getSexText', 'default_width' => 200],
+        ['attribute' => 'current_address', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'note', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'driver' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'full_name', 'show' => true, 'data_type' => 'string', 'is_avatar' => true, 'default_width' => 250],
+        ['attribute' => 'username', 'show' => true, 'data_type' => 'string', 'list_field' => 'adminUser|username', 'default_width' => 200],
+        ['attribute' => 'name_of_partner_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_partner_id', 'list_field' => 'partner|full_name', 'default_width' => 250],
+        ['attribute' => 'email', 'show' => true, 'data_type' => 'string', 'list_field' => 'adminUser|email', 'default_width' => 180],
+        ['attribute' => 'mobile_no', 'show' => true, 'data_type' => 'phone', 'default_width' => 200],
+        ['attribute' => 'id_no', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'driver_license', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'sex', 'show' => false, 'data_type' => 'list', 'list' => config('system.sex'), 'function' => 'getSexText', 'default_width' => 200],
+        ['attribute' => 'birth_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'name_of_vehicle_team_id', 'show' => false, 'data_type' => 'string', 'list_field' => 'vehicle_team_names', 'escape_html' => true, 'default_width' => 300],
+        ['attribute' => 'vehicles_reg_no', 'show' => false, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 200],
+        ['attribute' => 'work_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'experience_drive', 'show' => false, 'data_type' => 'number', 'default_width' => 350],
+        ['attribute' => 'experience_work', 'show' => false, 'data_type' => 'number', 'default_width' => 250],
+        ['attribute' => 'address', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'hometown', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'evaluate', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'rank', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'work_description', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'note', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'partner_driver' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'full_name', 'show' => true, 'data_type' => 'string', 'is_avatar' => true, 'default_width' => 250],
+        ['attribute' => 'username', 'show' => true, 'data_type' => 'string', 'list_field' => 'adminUser|username', 'default_width' => 200],
+        ['attribute' => 'email', 'show' => true, 'data_type' => 'string', 'list_field' => 'adminUser|email', 'default_width' => 180],
+        ['attribute' => 'mobile_no', 'show' => true, 'data_type' => 'phone', 'default_width' => 200],
+        ['attribute' => 'id_no', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'driver_license', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'sex', 'show' => false, 'data_type' => 'list', 'list' => config('system.sex'), 'function' => 'getSexText', 'default_width' => 200],
+        ['attribute' => 'birth_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'name_of_vehicle_team_id', 'show' => false, 'data_type' => 'string', 'list_field' => 'vehicle_team_names', 'escape_html' => true, 'default_width' => 300],
+        ['attribute' => 'vehicles_reg_no', 'show' => false, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 200],
+        ['attribute' => 'work_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'experience_drive', 'show' => false, 'data_type' => 'number', 'default_width' => 350],
+        ['attribute' => 'experience_work', 'show' => false, 'data_type' => 'number', 'default_width' => 250],
+        ['attribute' => 'address', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'hometown', 'show' => false, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'evaluate', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'rank', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'work_description', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'note', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'route' => [
+        ['attribute' => 'route_code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'name', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'route_status', 'show' => true, 'data_type' => 'list', 'list' => config('system.route_status'), 'function' => 'getStatusOnList', 'default_width' => 250],
+        ['attribute' => 'vehicle', 'show' => true, 'data_type' => auth()->user()->can('view vehicle') ? 'link' : 'string', 'field' => 'vehicle', 'list_field' => 'reg_no', 'entity' => 'vehicle', 'link_field' => 'vehicle_id', 'default_width' => 200],
+        ['attribute' => 'primary_driver', 'show' => true, 'data_type' => auth()->user()->can('view driver') ? 'link' : 'string', 'field' => 'primary_driver', 'list_field' => 'primary_driver_name', 'entity' => 'driver', 'link_field' => 'driver_id', 'default_width' => 250],
+        ['attribute' => 'name_of_partner_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_partner_id', 'list_field' => 'partner|full_name', 'default_width' => 250],
+        ['attribute' => 'order_codes', 'show' => true, 'data_type' => 'string', 'field' => 'order_codes', 'list_field' => 'order_codes', 'default_width' => 250],
+        ['attribute' => 'name_of_location_destination_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_location_arrival_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+
+        ['attribute' => 'name_of_province_destination_id', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'name_of_province_arrival_id', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+
+        ['attribute' => 'name_of_district_destination_id', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'name_of_district_arrival_id', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+
+        ['attribute' => 'is_approved', 'show' => true, 'data_type' => 'bool', 'list' => config('system.route_is_approved'), 'default_width' => 250],
+        ['attribute' => 'final_cost', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+
+        ['attribute' => 'ETD_date_reality', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETD_date_reality|ETD_time_reality', 'default_width' => 250],
+        ['attribute' => 'ETA_date_reality', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETA_date_reality|ETA_time_reality', 'default_width' => 250],
+        ['attribute' => 'ETD_date', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETD_date|ETD_time', 'default_width' => 250],
+        ['attribute' => 'ETA_date', 'show' => true, 'data_type' => 'datetime', 'list_field' => 'ETA_date|ETA_time', 'default_width' => 250],
+        ['attribute' => 'capacity_weight_ratio', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'capacity_volume_ratio', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+
+        ['attribute' => 'gps_distance', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'route_note', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'total_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'count_order', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'total_cost_reality', 'show' => false, 'data_type' => 'number', 'default_width' => 200, 'disable_filter' => true],
+        ['attribute' => 'order_notes', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'order_customer' => $order_customer,
+    'price_quote' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'type', 'show' => true, 'data_type' => 'list', 'list' => config('system.price_quote_type'), 'function' => 'getType', 'default_width' => 250],
+        ['attribute' => 'date_from', 'show' => true, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'date_to', 'show' => true, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'isDefault', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 250],
+        ['attribute' => 'isApplyAll', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 250],
+        ['attribute' => 'customer_groups', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'quota' => [
+        ['attribute' => 'quota_code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'name_of_vehicle_group_id', 'show' => true, 'data_type' => 'link', 'entity' => 'vehicle-group', 'link_field' => 'vehicle_group_id', 'default_width' => 180],
+        ['attribute' => 'name_of_location_destination_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_location_destination_group_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_location_arrival_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_location_arrival_group_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'title', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'total_cost', 'show' => true, 'data_type' => 'number', 'default_width' => 180],
+        ['attribute' => 'distance', 'show' => true, 'data_type' => 'number', 'default_width' => 180],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'payroll' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'date_from', 'show' => true, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'date_to', 'show' => true, 'data_type' => 'datetime', 'default_width' => 250],
+        ['attribute' => 'isDefault', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 250],
+        ['attribute' => 'isApplyAll', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 250],
+        ['attribute' => 'customer_groups', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'location' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'title', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_customer', 'list_field' => 'customer|full_name', 'default_width' => 200],
+        ['attribute' => 'address', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'ward_id', 'show' => true, 'data_type' => 'string', 'field' => 'ward_name', 'list_field' => 'ward|title', 'default_width' => 180],
+        ['attribute' => 'district_id', 'show' => true, 'data_type' => 'string', 'field' => 'district_name', 'list_field' => 'district|title', 'default_width' => 300],
+        ['attribute' => 'province_id', 'show' => true, 'data_type' => 'string', 'field' => 'province_name', 'list_field' => 'province|title', 'default_width' => 180],
+
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'order_price' => [
+        ['attribute' => 'order_code', 'show' => false, 'data_type' => 'link', 'list_field' => 'order|order_code', 'entity' => 'order', 'link_field' => 'order_id', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'name_of_location_destination_id', 'show' => true, 'data_type' => 'string', 'field' => 'location_destination_id', 'list_field' => 'destination_location_title', 'default_width' => 250],
+        ['attribute' => 'name_of_location_arrival_id', 'show' => true, 'data_type' => 'string', 'field' => 'location_arrival_id', 'list_field' => 'arrival_location_title', 'default_width' => 250],
+        ['attribute' => 'name_of_price_quote_id', 'show' => true, 'data_type' => 'link', 'list_field' => 'priceQuote|name', 'entity' => 'price-quote', 'link_field' => 'price_quote_id', 'default_width' => 250],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 300],
+        ['attribute' => 'amount', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'is_approved', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200],
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'location_group' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'title', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_customer', 'list_field' => 'customer|full_name', 'default_width' => 200],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'customer_group' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'customer_names', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'vehicle_team' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'name_of_partner_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_partner_id', 'list_field' => 'partner|full_name', 'default_width' => 250],
+        ['attribute' => 'name_of_capital_driver_id', 'show' => true, 'data_type' => 'string', 'list_field' => 'capital_driver_full_name', 'default_width' => 250],
+        ['attribute' => 'drivers_name', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 250],
+        ['attribute' => 'vehicles_reg_no', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'partner_vehicle_team' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'name_of_capital_driver_id', 'show' => true, 'data_type' => 'string', 'list_field' => 'capital_driver_full_name', 'default_width' => 250],
+        ['attribute' => 'drivers_name', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 250],
+        ['attribute' => 'vehicles_reg_no', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'admin' => [
+        ['attribute' => 'username', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'is_avatar' => true, 'default_width' => 180],
+        ['attribute' => 'full_name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'email', 'show' => true, 'data_type' => 'email', 'default_width' => 250],
+        ['attribute' => 'role', 'show' => true, 'data_type' => 'string', 'escape_html' => true, 'function' => 'getRoleText', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'contact' => [
+        ['attribute' => 'contact_name', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'is_avatar' => true, 'default_width' => 180],
+        ['attribute' => 'phone_number', 'show' => true, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'email', 'show' => true, 'data_type' => 'email', 'default_width' => 250],
+        ['attribute' => 'full_address', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'contract' => [
+        ['attribute' => 'contract_no', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'customer_id', 'show' => true, 'data_type' => 'string', 'field' => 'full_name', 'list_field' => 'customer|full_name', 'default_width' => 250],
+        ['attribute' => 'issue_date', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'expired_date', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'type', 'show' => true, 'data_type' => 'string', 'list_field' => 'contractType|name', 'default_width' => 250],
+        ['attribute' => 'status', 'show' => true, 'data_type' => 'list', 'list' => config('system.contract_status'), 'function' => 'getStatus', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'role' => [
+        ['attribute' => 'title', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'template' => [
+        ['attribute' => 'title', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'type', 'show' => true, 'data_type' => 'list', 'list' => config('system.template_type'), 'function' => 'getType', 'default_width' => 250],
+        ['attribute' => 'export_type', 'show' => true, 'data_type' => 'list', 'list' => config('system.template_export_type'), 'function' => 'getExportType', 'default_width' => 250],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'download', 'show' => true, 'data_type' => 'download', 'list_field' => 'getFile|file_id', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'template_payment' => [
+        ['attribute' => 'title', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'matching_column_index', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'header_row_index', 'show' => true, 'data_type' => 'number', 'default_width' => 250],
+        ['attribute' => 'download', 'show' => true, 'data_type' => 'download', 'list_field' => 'getFile|file_id', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'import_history' => [
+        ['attribute' => 'file_name', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'download', 'show' => true, 'data_type' => 'download', 'list_field' => 'file_id', 'default_width' => 150],
+        ['attribute' => 'module', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'type', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'success_record', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'error_record', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        // ['attribute' => 'username', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'goods_type' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'title', 'show' => true, 'data_type' => 'string', 'default_width' => 150],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'file', 'show' => true, 'data_type' => 'image', 'list_field' => 'getFile|file_id', 'default_width' => 200],
+
+        ['attribute' => 'name_of_goods_group_id', 'show' => true, 'data_type' => 'string', 'default_width' => 150],
+
+        ['attribute' => 'volume', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'weight', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'in_amount', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'out_amount', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'note', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'function' => 'getPreview', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'goods_unit' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'title', 'show' => true, 'data_type' => 'string', 'default_width' => 150],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_customer', 'list_field' => 'customer|full_name', 'default_width' => 200],
+        ['attribute' => 'note', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'currency' => [
+        ['attribute' => 'currency_code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'currency_name', 'show' => true, 'data_type' => 'string', 'default_width' => 150],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'contract_type' => [
+        ['attribute' => 'name', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+
+    ],
+    'location_type' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'title', 'show' => true, 'data_type' => 'string', 'default_width' => 150],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'string', 'field' => 'name_of_customer', 'list_field' => 'customer|full_name', 'default_width' => 200],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+
+    ],
+    'system_code_config' => [
+        ['attribute' => 'type', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'function' => 'getSystemCodeTypeText', 'default_width' => 300],
+        ['attribute' => 'prefix', 'show' => true, 'data_type' => 'string', 'default_width' => 150],
+        ['attribute' => 'is_generate_time', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200],
+        ['attribute' => 'time_format', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'suffix_length', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'preview', 'show' => true, 'data_type' => 'string', 'function' => 'getPreview', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'driver_config_file' => [
+        ['attribute' => 'file_name', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'allow_extension', 'show' => true, 'data_type' => 'string', 'function' => 'getFileType', 'default_width' => 150],
+        ['attribute' => 'is_show_register', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200],
+        ['attribute' => 'is_show_expired', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200],
+        ['attribute' => 'active', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'vehicle_config_file' => [
+        ['attribute' => 'file_name', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'allow_extension', 'show' => true, 'data_type' => 'string', 'function' => 'getFileType', 'default_width' => 150],
+        ['attribute' => 'is_show_register', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200],
+        ['attribute' => 'is_show_expired', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200],
+        ['attribute' => 'active', 'show' => true, 'data_type' => 'bool', 'list' => config('system.active'), 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'vehicle_config_specification' => [
+        ['attribute' => 'name', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'type', 'show' => true, 'data_type' => 'list', 'list' => config('system.column_type'), 'function' => 'getType', 'default_width' => 150],
+        ['attribute' => 'active', 'show' => true, 'data_type' => 'bool', 'list' => config('system.active'), 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'report_schedule' => [
+        ['attribute' => 'description', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'email', 'show' => true, 'data_type' => 'email', 'default_width' => 150],
+        ['attribute' => 'date_from', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'date_to', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'schedule_type', 'show' => true, 'data_type' => 'list', 'list' => config('system.schedule_type'), 'function' => 'getScheduleType', 'default_width' => 200],
+        ['attribute' => 'time_to_send', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200]
+    ],
+    'merge_order' => [
+        ['attribute' => 'order_code', 'show' => false, 'data_type' => 'link', 'is_sticky' => true, 'entity' => 'order', 'link_field' => 'id', 'default_width' => 200],
+        ['attribute' => 'status', 'show' => true, 'data_type' => 'list', 'list' => config('system.order_status'), 'function' => 'getStatusOnList', 'default_width' => 170],
+        ['attribute' => 'order_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+        ['attribute' => 'model_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+        ['attribute' => 'vin_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+
+        ['attribute' => 'precedence', 'show' => true, 'data_type' => 'list', 'list' => config('system.order_precedences'), 'function' => 'getPrecedenceOnList', 'default_width' => 150],
+        ['attribute' => 'ETD', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETD_date', 'list_field' => 'ETD_date|ETD_time', 'default_width' => 200],
+        ['attribute' => 'ETA', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETA_date', 'list_field' => 'ETA_date|ETA_time', 'default_width' => 200],
+        ['attribute' => 'name_of_location_destination_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_location_arrival_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'customer_name', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'is_merge_item', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300],
+        ['attribute' => 'bill_no', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'vehicle', 'show' => false, 'data_type' => 'string', 'field' => 'reg_no', 'list_field' => 'reg_no', 'entity' => 'vehicle', 'link_field' => 'vehicle_id', 'default_width' => 250],
+        ['attribute' => 'primary_driver', 'show' => false, 'data_type' => 'string', 'field' => 'driver_name', 'list_field' => 'driver_name', 'default_width' => 250],
+        ['attribute' => 'order_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'cod_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 220],
+        ['attribute' => 'commission_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'volume', 'show' => false, 'data_type' => 'number', 'field' => 'volume', 'default_width' => 200],
+        ['attribute' => 'weight', 'show' => false, 'data_type' => 'number', 'field' => 'weight', 'default_width' => 200],
+        ['attribute' => 'ETD_reality', 'show' => false, 'data_type' => 'datetime', 'field' => 'ETD_date_reality', 'list_field' => 'ETD_date_reality|ETD_time_reality', 'default_width' => 250],
+        ['attribute' => 'contact_mobile_no_destination', 'show' => false, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'contact_name_destination', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'loading_destination_fee', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+        ['attribute' => 'ETA_reality', 'show' => false, 'data_type' => 'datetime', 'field' => 'ETA_date_reality', 'list_field' => 'ETA_date_reality|ETA_time_reality', 'default_width' => 250],
+        ['attribute' => 'contact_mobile_no_arrival', 'show' => false, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'contact_name_arrival', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'loading_arrival_fee', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+        ['attribute' => 'customer_mobile_no', 'show' => false, 'data_type' => 'phone', 'default_width' => 200],
+        ['attribute' => 'note', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'is_collected_documents', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300],
+        ['attribute' => 'status_collected_documents', 'show' => false, 'data_type' => 'list', 'list' => config('system.collected_documents_status'), 'function' => 'getStatusDocuments', 'default_width' => 300],
+        ['attribute' => 'date_collected_documents', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200],
+        ['attribute' => 'payment_type', 'show' => false, 'data_type' => 'list', 'list' => config('system.order_payment_type'), 'list_field' => 'payment_type_title', 'default_width' => 200],
+        ['attribute' => 'name_of_payment_user_id', 'show' => false, 'data_type' => 'string', 'field' => 'payment_user_id', 'list_field' => 'pu_username', 'default_width' => 250],
+        ['attribute' => 'vat', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 100],
+        ['attribute' => 'goods_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'anonymous_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ],
+    'accessory' => [
+        ['attribute' => 'name', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200]
+
+    ],
+    'repair_ticket' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 300],
+        ['attribute' => 'name', 'show' => true, 'data_type' => 'string', 'default_width' => 150],
+        ['attribute' => 'name_of_driver_id', 'show' => true, 'data_type' => 'link', 'list_field' => 'driver|full_name', 'entity' => 'driver', 'link_field' => 'driver_id', 'default_width' => 200],
+        ['attribute' => 'name_of_vehicle_id', 'show' => true, 'data_type' => 'link', 'list_field' => 'vehicle|reg_no', 'entity' => 'vehicle', 'link_field' => 'vehicle_id', 'default_width' => 200],
+        ['attribute' => 'repair_date', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'amount', 'show' => true, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'is_approved', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 200]
+    ],
+    'template_excel_converter' => [
+        ['attribute' => 'title', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'header_row_index', 'show' => true, 'data_type' => 'number', 'default_width' => 250],
+        ['attribute' => 'max_row', 'show' => true, 'data_type' => 'number', 'default_width' => 250],
+        ['attribute' => 'is_use_convert_sheet', 'show' => true, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'customer_default_data' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 200],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'link', 'is_sticky' => true, 'list_field' => 'customer|full_name', 'entity' => 'customer', 'link_field' => 'customer_id', 'default_width' => 200],
+        //   ['attribute' => 'name_of_system_code_config_id', 'show' => true, 'data_type' => 'link', 'list_field' => 'systemCodeConfig|prefix', 'entity' => 'system-code-config', 'link_field' => 'system_code_config_id', 'default_width' => 200],
+        ['attribute' => 'name_of_location_destination_ids', 'show' => true, 'data_type' => 'concat_string', 'relation' => 'locationDestinationAttributes', 'field' => 'title', 'default_width' => 200],
+        ['attribute' => 'name_of_location_arrival_ids', 'show' => true, 'data_type' => 'concat_string', 'relation' => 'locationArrivalAttributes', 'field' => 'title', 'default_width' => 200],
+
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'default_width' => 200]
+    ],
+    'partner' => [
+        ['attribute' => 'code', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'full_name', 'show' => true, 'data_type' => 'string', 'is_avatar' => true, 'default_width' => 250],
+        ['attribute' => 'mobile_no', 'show' => true, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'email', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'delegate', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'tax_code', 'show' => true, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'current_address', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'note', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'name_of_ins_id', 'show' => true, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => true, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+    'partner_order' => [
+        ['attribute' => 'order_code', 'show' => false, 'data_type' => 'link', 'is_sticky' => true, 'entity' => 'order', 'link_field' => 'id', 'default_width' => 200],
+        ['attribute' => 'status', 'show' => true, 'data_type' => 'list', 'list' => config('system.partner_order_status_search'), 'function' => 'getPartnerStatusOnList', 'default_width' => 200],
+        ['attribute' => 'order_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+        ['attribute' => 'model_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+        ['attribute' => 'vin_no', 'show' => true, 'data_type' => 'string', 'default_width' => 170],
+
+        ['attribute' => 'precedence', 'show' => true, 'data_type' => 'list', 'list' => config('system.order_precedences'), 'function' => 'getPrecedenceOnList', 'default_width' => 150],
+        ['attribute' => 'ETD', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETD_date', 'list_field' => 'ETD_date|ETD_time', 'default_width' => 200],
+        ['attribute' => 'ETA', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETA_date', 'list_field' => 'ETA_date|ETA_time', 'default_width' => 200],
+        ['attribute' => 'name_of_location_destination_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_location_arrival_id', 'show' => true, 'data_type' => 'location', 'default_width' => 250],
+        ['attribute' => 'name_of_customer_id', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'customer_name', 'show' => true, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'vehicle', 'show' => true, 'data_type' => 'string', 'field' => 'reg_no', 'list_field' => 'reg_no', 'entity' => 'vehicle', 'link_field' => 'vehicle_id', 'default_width' => 250],
+        ['attribute' => 'primary_driver', 'show' => true, 'data_type' => 'string', 'field' => 'driver_name', 'list_field' => 'driver_name', 'default_width' => 250],
+        ['attribute' => 'ETD_reality', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETD_date_reality', 'list_field' => 'ETD_date_reality|ETD_time_reality', 'default_width' => 250],
+        ['attribute' => 'ETA_reality', 'show' => true, 'data_type' => 'datetime', 'field' => 'ETA_date_reality', 'list_field' => 'ETA_date_reality|ETA_time_reality', 'default_width' => 250],
+        ['attribute' => 'contact_mobile_no_destination', 'show' => false, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'contact_name_destination', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'loading_destination_fee', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+        ['attribute' => 'contact_mobile_no_arrival', 'show' => false, 'data_type' => 'phone', 'default_width' => 250],
+        ['attribute' => 'contact_name_arrival', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'loading_arrival_fee', 'show' => false, 'data_type' => 'number', 'default_width' => 300],
+        ['attribute' => 'customer_mobile_no', 'show' => false, 'data_type' => 'phone', 'default_width' => 200],
+
+        ['attribute' => 'is_merge_item', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300],
+        ['attribute' => 'bill_no', 'show' => false, 'data_type' => 'string', 'default_width' => 200],
+        ['attribute' => 'order_date', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'cod_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 220],
+        ['attribute' => 'commission_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'volume', 'show' => false, 'data_type' => 'number', 'field' => 'volume', 'default_width' => 200],
+        ['attribute' => 'weight', 'show' => false, 'data_type' => 'number', 'field' => 'weight', 'default_width' => 200],
+        ['attribute' => 'note', 'show' => false, 'data_type' => 'string', 'default_width' => 300],
+        ['attribute' => 'is_collected_documents', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 300],
+        ['attribute' => 'status_collected_documents', 'show' => false, 'data_type' => 'list', 'list' => config('system.collected_documents_status'), 'function' => 'getStatusDocuments', 'default_width' => 300],
+        ['attribute' => 'date_collected_documents', 'show' => false, 'data_type' => 'datetime', 'default_width' => 200],
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => false, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200],
+        ['attribute' => 'payment_type', 'show' => false, 'data_type' => 'list', 'list' => config('system.order_payment_type'), 'list_field' => 'payment_type_title', 'default_width' => 200],
+        ['attribute' => 'name_of_payment_user_id', 'show' => false, 'data_type' => 'string', 'field' => 'payment_user_id', 'list_field' => 'pu_username', 'default_width' => 250],
+        ['attribute' => 'vat', 'show' => false, 'data_type' => 'bool', 'list' => config('system.option'), 'default_width' => 100],
+        ['attribute' => 'goods_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+        ['attribute' => 'anonymous_amount', 'show' => false, 'data_type' => 'number', 'default_width' => 200],
+    ],
+    'partner_template' => [
+        ['attribute' => 'title', 'show' => false, 'data_type' => 'string', 'is_sticky' => true, 'default_width' => 180],
+        ['attribute' => 'type', 'show' => true, 'data_type' => 'list', 'list' => config('system.partner_template_type'), 'function' => 'getType', 'default_width' => 250],
+        ['attribute' => 'export_type', 'show' => true, 'data_type' => 'list', 'list' => config('system.template_export_type'), 'function' => 'getExportType', 'default_width' => 250],
+        ['attribute' => 'description', 'show' => true, 'data_type' => 'string', 'default_width' => 250],
+        ['attribute' => 'download', 'show' => true, 'data_type' => 'download', 'list_field' => 'getFile|file_id', 'default_width' => 250],
+
+        ['attribute' => 'name_of_ins_id', 'show' => false, 'data_type' => 'ins_user', 'field' => 'name_of_ins_id', 'default_width' => 200],
+        ['attribute' => 'name_of_upd_id', 'show' => false, 'data_type' => 'upd_user', 'field' => 'name_of_upd_id', 'default_width' => 200],
+        ['attribute' => 'ins_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'ins_date', 'default_width' => 200],
+        ['attribute' => 'upd_date', 'show' => true, 'data_type' => 'datetime', 'field' => 'upd_date', 'default_width' => 200]
+    ],
+];

@@ -1,0 +1,8 @@
+.content-body {
+    max-width: 600px;
+}
+
+.card-box.confirm-display,
+.card-box.form-display {
+    height: calc(100vh - 120px);
+}

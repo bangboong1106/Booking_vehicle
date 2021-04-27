@@ -1,0 +1,394 @@
+.icon-color-up {
+  color: green;
+}
+
+.icon-color-down {
+  color: red;
+}
+
+.card {
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.none-box-shadow {
+  border: 1px solid rgb(223, 223, 223);
+  box-shadow: none;
+}
+
+#general-statistic-panel > .row,
+#document-statistic-panel > .row {
+  display: none;
+}
+
+#general-statistic-panel {
+  margin-bottom: 20px;
+}
+
+#param-general-statistic {
+  width: 250px;
+  display: flex;
+}
+
+#param-general-statistic > div {
+  width: 100px;
+  line-height: 35px;
+}
+
+#turn-by-customer-label,
+#income-by-customer-label,
+#income-by-time-label,
+#turn-by-time-label {
+  display: none;
+  margin-top: -5px;
+  height: 40px;
+  border: solid 1px rgb(223, 223, 223);
+  padding: 10px;
+}
+
+.wrapper {
+  background-color: #f4f6f9;
+}
+
+.overview-sub-title {
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 1px;
+  color: white;
+}
+
+.overview-body {
+  padding: unset;
+  background-color: #edf5fd;
+}
+
+.overview-body:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.overview-sub-container {
+  text-align: center;
+  margin-top: 14px;
+  padding-bottom: 7px;
+}
+
+.overview-active,
+.overview-accumulate {
+  font-size: 14px;
+  /*white-space: nowrap;*/
+}
+
+.overview-count-number {
+  font-size: 24px;
+}
+
+.time-line-style {
+  text-align: center;
+  font-size: 16px;
+  margin: 0 auto;
+  white-space: nowrap;
+}
+
+.time-line-number-style {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 24px;
+}
+
+.figures-compare {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.param-label {
+  font-weight: bold;
+}
+
+.parameter-detail {
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
+.modal-fix {
+  max-width: unset;
+  margin: unset;
+}
+
+.parameter-detail > * {
+  margin-right: 20px;
+}
+
+#total-using-customer-panel .using-customer-content {
+  margin-top: 9px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.sticky + .content-wrapper {
+  padding-top: 67px;
+}
+
+.total-customer-title {
+  background-color: #0095cc;
+}
+
+.cancel-customer-title {
+  background-color: red;
+}
+
+.using-customer-title {
+  background-color: orange;
+}
+
+.wrapper-item-style {
+  box-shadow: inset 0px 0px 0px 1px #0095cc;
+}
+
+.wrapper-item-style-more {
+  box-shadow: inset 0px 0px 0px 1px #0095cc;
+}
+
+/*Belonging Indecator*/
+.arrow_box {
+  position: relative;
+  background: #fff;
+}
+
+.arrow_box:after,
+.arrow_box:before {
+  bottom: 100%;
+  left: 83%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #fff;
+  border-width: 20px;
+  margin-left: -20px;
+}
+
+.arrow_box:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-bottom-color: rgb(128, 128, 128);
+  border-width: 21px;
+  margin-left: -21px;
+}
+
+.product-list-fix {
+  margin: 0 auto;
+  border-radius: unset !important;
+  width: 100% !important;
+  border-top: none !important;
+}
+
+/*Styling navigation option tool content chart header*/
+.expand-chart-container {
+  height: 18px;
+  width: 18px;
+  background-image: url("/css/backend/img/icons8-expand-80.png");
+  background-size: 18px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.collapse-chart-container {
+  height: 18px;
+  width: 18px;
+  background-image: url("/css/backend/img/icons8-collapse-80.png");
+  background-size: 18px;
+  background-repeat: no-repeat;
+}
+
+hr {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.navigate-chart {
+  display: flex;
+}
+
+.navigate-chart img,
+.navigate-chart span {
+  height: 18px;
+  width: 18px;
+  margin-left: 15px;
+}
+
+.navigate-chart img:hover {
+  cursor: pointer;
+}
+
+.full-screen-chart {
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.none-display {
+  display: none;
+}
+
+.block-display {
+  display: block;
+}
+
+.nomal-canvas {
+  height: 36vh !important;
+}
+
+.stretch-cavas {
+  height: 80vh !important;
+}
+
+.page-title-box {
+  background: #fff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.03);
+  padding: 15px 20px;
+  margin: 0px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.page-title {
+  margin-bottom: 0px;
+  margin-top: 0;
+  font-size: 20px;
+  float: none;
+  /* float: left; */
+}
+
+#chart-order-statistic-loader,
+#chart-revenue-statistic-loader,
+#chart-customer-statistic-loader,
+#chart-document-statistic-loader,
+
+#chart-income-by-customer-loader,
+#chart-income-by-time-loader,
+#chart-turn-by-customer-loader,
+#chart-turn-by-time-loader {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-size: 60px;
+  background-repeat: no-repeat;
+  left: 45%;
+  top: 20%;
+  display: none;
+  z-index: 100;
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid #3498db;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.card-header {
+  position: relative;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+}
+
+.order-statistic-header,
+.document-statistic-header,
+.revenue-statistic-header,
+.customer-statistic-header {
+  padding: 10px 16px 0 16px !important;
+  border-bottom: none !important;
+}
+
+.order-statistic.card-body,
+.document-statistic.card-body,
+.customer-statistic.card-body,
+.revenue-statistic.card-body {
+  padding: 4px;
+  height: 340px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.row.general-statistic > .col-md-6,
+.row.general-statistic > .col-xl-4 {
+  line-height: 16px;
+  display: flex;
+}
+
+.row.general-statistic > .col-md-6 > .card-box,
+.row.general-statistic > .col-xl-4 > .card-box {
+  width: 100%;
+}
+
+hr {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table-bordered {
+  border: none;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid #dee2e6;
+  padding: 6px;
+}
+
+.title {
+  font-weight: 500;
+}
+
+.col.item:not(:first-child) {
+  margin-top: 8px;
+}
+
+.customer-title,
+.revenues-title {
+  margin-bottom: 8px;
+}
+
+.customers-content,
+.revenues-content span.badge.badge-light {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: left;
+}

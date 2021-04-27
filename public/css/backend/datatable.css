@@ -1,0 +1,75 @@
+.dataTables_length select, .dataTables_filter input[type=search] {
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: .25rem;
+    border: 1px solid #cfcfcf;
+    box-shadow: none;
+    color: rgba(0, 0, 0, .6);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: #039cfd !important;
+    border-color: #039cfd !important;
+    color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #039cfd !important;
+    border-color: #039cfd !important;
+    color: white !important;
+}
+
+.dataTables_wrapper .dataTables_processing {
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    position: absolute;
+    top: 72px !important;
+    padding: 0 !important;
+    background: #e4e4e482 !important;
+}
+
+.dataTables_wrapper #table_contacts_processing.dataTables_processing {
+    height: 60px;
+}
+
+table.dataTable {
+    border-radius: 4px;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: none !important;
+}
+
+.table.dataTable.no-footer {
+    border-bottom: none;
+}
+
+.dataTable td, .dataTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.dataTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.dataTable tr:hover {
+    background-color: #ddd;
+}
+
+.dataTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.result-import.filter-fail .table .importable{
+    display: none;
+}

@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 80:80
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    container_name: app_onelog
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=onelog
+      - MYSQL_USER=devine
+      - MYSQL_PASSWORD=root
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    container_name: mysql_onelog
