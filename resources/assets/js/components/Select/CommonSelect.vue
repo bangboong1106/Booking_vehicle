@@ -59,7 +59,7 @@ export default {
     fetchData() {
       this.fetching = true;
       axios
-          .post('c-location/list', this.params)
+          .post('na/c-location/list', this.params)
           .then((response) => {
             if (response.data.errorCode != 0) {
               this.$message.error(response.data.errorMessage.map((p) => p.errorMessage).join("\n"))

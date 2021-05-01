@@ -56,4 +56,7 @@ export default {
   position: relative;
   font-size: 24px;
 }
+.ant-menu.ant-menu-dark .ant-menu-item-selected{
+  background-color: transparent;
+}
 </style>

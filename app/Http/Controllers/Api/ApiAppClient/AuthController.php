@@ -116,4 +116,62 @@ class AuthController extends Controller
             DB::rollBack();
         }
     }
+    public function register(Request $request)
+    {
+        $validation = \Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required|confirmed',
+            'full_name' => 'required',
+            'email' => 'required',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json([
+                'errorCode' => HttpCode::EC_BAD_REQUEST,
+                'errorMessage' => $validation->messages()
+            ]);
+        } else {
+            try {
+                DB::beginTransaction();
+
+                $user = new AdminUserInfo();
+
+                $user->username = $request->username;
+                $user->full_name = $request->full_name;
+                $user->email = $request->email;
+                $user->password = bcrypt($request->password);
+                $user->role = 'customer';
+                $user->active = 1;
+                $user->ins_id = 1;
+
+                $user->save();
+
+                $customer = new Customer();
+
+                $customer->user_id = $user->id;
+                $customer->customer_type = 1;
+                $customer->customer_code = 'KH0'.$user->id;
+                $customer->full_name = $request->full_name;
+                $customer->ins_id = 1;
+                $customer->active = 1;
+
+                $customer->save();
+
+                DB::commit();
+
+                return response([
+                    'status' => 'success',
+                    'msg' => 'Đăng kí thành công'
+                ], 200);
+
+            } catch (\Exception $e) {
+                logError($e);
+                return response([
+                    'status' => 'error',
+                    'msg' => 'Lỗi hệ thống'
+                ], 200);
+                DB::rollBack();
+            }
+        }
+    }
 }

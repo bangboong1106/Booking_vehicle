@@ -68,14 +68,14 @@ class ClientApiController extends ApiController
                     'errorMessage' => $validation->messages()
                 ]);
             } else {
-                $userId = Auth::User()->id;
+                // $userId = Auth::User()->id;
 
-                $client = $this->getCustomerRepository()->getCustomerByUserId($userId);
-                $clientID = $client->id;
+                // $client = $this->getCustomerRepository()->getCustomerByUserId($userId);
+                // $clientID = $client->id;
 
-                $customer = $this->getCustomerRepository()->getCustomerByParentId($client);
+                // $customer = $this->getCustomerRepository()->getCustomerByParentId($client);
 
-                $items = $this->_repository->getDataList($clientID, $customer->id, $request);
+                $items = $this->_repository->getDataList(null, null, $request);
                 return response()->json([
                     'errorCode' => HttpCode::EC_OK,
                     'errorMessage' => '',

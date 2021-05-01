@@ -1,7 +1,5 @@
 <template>
-
   <div class="book-car container">
-
     <a-row :gutter="[16,16]" class="row">
       <a-col :xs="{ span: 24 }" :lg="{ span: 6 }" :md="{ span: 24 }">
         <order-info></order-info>

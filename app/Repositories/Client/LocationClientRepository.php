@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\DB;
 class LocationClientRepository extends LocationRepository
 {
 
+    protected function getIgnoreClientID()
+    {
+        return true;
+    }
+
     protected function getClientColumns($clientID, $customerID, $table_name)
     {
         $columns = [
@@ -20,8 +25,12 @@ class LocationClientRepository extends LocationRepository
             DB::raw('m_ward.title as name_of_ward_id'),
             DB::raw('lg.title as name_of_location_group_id'),
             DB::raw('lt.title as name_of_location_type_id'),
-            DB::raw("IF(locations.ins_id = $customerID ,TRUE,FALSE) as is_allow_update"),
         ];
+
+        if ($customerID) {
+            $columns[] = DB::raw("IF(locations.ins_id = $customerID ,TRUE,FALSE) as is_allow_update");
+        }
+
         return $columns;
     }
 

@@ -94,7 +94,7 @@ export default {
       this.loading = true ;
       if (!data) {
         axios
-            .post('c-goods/list', {
+            .post('na/c-goods/list', {
               "pageSize": 50,
               "pageIndex": 1,
               "sort": [
@@ -123,7 +123,7 @@ export default {
       }
       else {
         axios
-            .post('c-goods/list', {
+            .post('na/c-goods/list', {
               "pageSize": 50,
               "pageIndex": 1,
               "sort": [
@@ -153,7 +153,7 @@ export default {
     },
     fetchDataBrands() {
       axios
-          .post('c-goods-group/list', {
+          .post('na/c-goods-group/list', {
             "pageSize": 50,
             "pageIndex": 1,
             "sort": [

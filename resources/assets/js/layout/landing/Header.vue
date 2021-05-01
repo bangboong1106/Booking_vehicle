@@ -3,83 +3,98 @@
     <a-layout-header class="header primary-background-color" collapsible>
       <div class="container wrap">
         <div class="logo" @click="goToHome">
-          <img :src="require('../../assets/img/logo.png')" alt="" style="height: 64px;cursor: pointer">
+          <img
+            :src="require('../../assets/img/logo.png')"
+            alt=""
+            style="height: 64px; cursor: pointer"
+          />
         </div>
         <div class="menu-topbav">
           <a-menu
-              theme="dark"
-              mode="horizontal"
-              :style="{ lineHeight: '64px', backgroundColor: 'transparent' }"
-
+            theme="dark"
+            mode="horizontal"
+            :style="{ lineHeight: '64px', backgroundColor: 'transparent' }"
           >
-            <a-menu-item :style="{ backgroundColor: 'transparent',textTransform:'uppercase',fontWeight:'bold' }"
-                         :key="menu.key"
-                         v-for="menu in homeMenu"
-
+            <a-menu-item
+              :style="{
+                backgroundColor: 'transparent',
+                textTransform: 'uppercase',
+                fontWeight: 'bold',
+              }"
+              :key="menu.key"
+              v-for="menu in homeMenu"
             >
               <router-link :to="menu.path">{{ menu.title }}</router-link>
-            </a-menu-item
-            >
+            </a-menu-item>
+           <a-menu-item :style="{backgroundColor: 'transparent'}">
+            <Menu />
+           </a-menu-item>
           </a-menu>
         </div>
-        <a-badge :key="key" :count="this.quantity">
-          <a-icon class="cart-icon" type="shopping" @click="showDrawer"></a-icon>
+        <!-- <a-badge :key="key" >
+          <a-icon
+            class="cart-icon"
+            type="shopping"
+            @click="showDrawer"
+          ></a-icon>
         </a-badge>
 
         <div class="cart-mobile">
           <a-drawer
-              placement="right"
-              :closable="true"
-              :visible="visible"
-              :width="'100%'"
-              :after-visible-change="afterVisibleChange"
-              @close="onClose"
+            placement="right"
+            :closable="true"
+            
+            :width="'100%'"
+            
+            @close="onClose"
           >
             <div class="cart-header">
-              <h3 style="margin: 0">Thông tin giỏ hàng (<span style="color: red">{{ quantity }}</span>)</h3>
+              <h3 style="margin: 0">
+                Thông tin giỏ hàng (<span style="color: red"></span>)
+              </h3>
               <span @click="onClose" style="cursor: pointer">X</span>
             </div>
 
-            <a-divider style="margin : 0"/>
-            <cart-list @getQuantityItemsInCart="this.getQuantity" @closeCart ="onClose"></cart-list>
+            <a-divider style="margin: 0" />
+            <cart-list @closeCart="onClose"></cart-list>
           </a-drawer>
-
         </div>
         <div class="cart-tablet">
           <a-drawer
-              placement="right"
-              :closable="true"
-              :visible="visible"
-              :width="'100%'"
-              :after-visible-change="afterVisibleChange"
-              @close="onClose"
+            placement="right"
+            :closable="true"
+            
+            :width="'100%'"
+            
+            @close="onClose"
           >
             <div class="cart-header">
-              <h3 style="margin: 0">Thông tin giỏ hàng (<span style="color: red">{{ quantity }}</span>)</h3>
+              <h3 style="margin: 0">
+                Thông tin giỏ hàng (<span style="color: red"></span>)
+              </h3>
               <span @click="onClose" style="cursor: pointer">X</span>
             </div>
 
-            <a-divider style="margin : 0"/>
-            <cart-list @getQuantityItemsInCart="this.getQuantity" @closeCart ="onClose"></cart-list>
+            <a-divider style="margin: 0" />
+            <cart-list @closeCart="onClose"></cart-list>
           </a-drawer>
-
-        </div>
+        </div> -->
       </div>
-
     </a-layout-header>
-
   </a-layout>
 </template>
 <script>
 import CartList from "@/components/Carts/CartList";
 import EventBus from "@/event-bus";
+import Menu from "./Menu.vue"
 
 export default {
   components: {
-    "cart-list": CartList
+    "cart-list": CartList,
+    Menu
   },
   data() {
-    var quantity = JSON.parse(localStorage.getItem("cartDetail")).length;
+   
     return {
       homeMenu: [
         {
@@ -103,7 +118,7 @@ export default {
         },
       ],
       visible: false,
-      quantity,
+     
       key: 0
     }
   },
@@ -119,23 +134,9 @@ export default {
     },
     onClose() {
       this.visible = false;
-    },
-    getQuantity() {
-      this.quantity = JSON.parse(localStorage.getItem("cartDetail")).length;
-      this.key++;
     }
-  },
-
-  created() {
-    EventBus.$on('getQuantityItemsInCart', this.getQuantity)
-  },
-  destroyed() {
-    EventBus.$off('getQuantityItemsInCart', this.getQuantity)
-
-  }
-};
+  }}
 </script>
-
 <style scoped>
 span.ant-badge {
   display: none;
@@ -164,7 +165,6 @@ span.ant-badge {
 .cart-header > span {
   font-size: 18px;
 }
-
 
 .ant-row-rtl .logo {
   float: right;
@@ -223,7 +223,7 @@ span.ant-badge {
 .cart {
   display: none;
 }
-.cart-tablet{
+.cart-tablet {
   display: none;
 }
 
@@ -269,7 +269,7 @@ span.ant-badge {
   }
 
   .cart-icon {
-    color: rgba(255, 255, 255, 0.65)
+    color: rgba(255, 255, 255, 0.65);
   }
 
   .cart-icon:hover {
@@ -288,7 +288,7 @@ span.ant-badge {
     display: block;
   }
   .cart-icon {
-    color: rgba(255, 255, 255, 0.65)
+    color: rgba(255, 255, 255, 0.65);
   }
 
   .cart-icon:hover {
@@ -303,7 +303,6 @@ span.ant-badge {
     top: 18px;
     cursor: pointer;
   }
-
 }
 </style>
 

@@ -14,10 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('auth/login', 'ApiAppClient\AuthController@login');
+Route::post('auth/register', 'ApiAppClient\AuthController@register');
+
 Route::get('app-info', 'AppInfoApiController@getAppInfoById');
 
 Route::post('c-login', 'ApiAppClient\AuthIntegrationController@loginM');
-Route::post('c-goods-group/list', 'ApiAppClient\ApiWithoutAuthentication\GoodsGroupApiController@list');
+Route::post('na/c-goods-group/list', 'ApiAppClient\ApiWithoutAuthentication\GoodsGroupApiController@list');
+Route::post('na/c-goods/list', 'ApiAppClient\ApiWithoutAuthentication\GoodsApiController@list');
+Route::post('na/c-location/list', 'ApiAppClient\ApiWithoutAuthentication\LocationApiController@list');
+
 
 Route::group(['middleware' => 'fjwt.auth'], function () {
     Route::get('auth/user', 'ApiAppClient\AuthController@user');

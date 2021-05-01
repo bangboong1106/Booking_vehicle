@@ -15,7 +15,10 @@ const CalendarClient = () => import("@/pages/Calendar/CalendarClient.vue");
 
 
 
-const Login = () => import("@/pages/Login");
+// const Login = () => import("@/pages/Login");
+import Login from "@/pages/Login";
+// const Register = () => import("@/pages/Register");
+import Register from "@/pages/Register";
 import Home from "@/pages/Home.vue";
 
 
@@ -51,7 +54,7 @@ const routes = [
     component: LayoutIndex,
     redirect: "/home",
     meta: {
-      auth: true,
+      auth: undefined,
     },
     children: [
       {
@@ -59,7 +62,7 @@ const routes = [
         name: "Trang chủ",
         component: Home,
         meta: {
-          auth: true,
+          auth: undefined,
         },
       },
       {
@@ -67,7 +70,7 @@ const routes = [
         name: "Tổng quan",
         component: Dashboard,
         meta: {
-          auth: true,
+          auth: false,
           title: "Tổng quan " + appName,
         },
       },
@@ -76,7 +79,7 @@ const routes = [
         name: "Đặt xe",
         component: OrderVehicle,
         meta: {
-          auth: true,
+          auth: undefined,
           title: "Đặt xe " + appName,
         },
       },
@@ -85,7 +88,7 @@ const routes = [
         name: "Thiết lập đơn hàng",
         component: OrderSetup ,
         meta: {
-          auth: true,
+          auth: undefined,
           title: "Thiết lập đơn hàng " + appName,
         },
       },
@@ -234,17 +237,27 @@ const routes = [
           title: "Lịch biểu " + appName,
         },
       },
+      {
+        path: "/login",
+        name: "Đăng nhập",
+        component: Login,
+        meta: {
+          auth: false,
+          title: "Đăng nhập" + appName,
+        },
+      },
+      {
+        path: "/register",
+        name: "Đăng ký",
+        component: Register,
+        meta: {
+          auth: false,
+          title: "Đăng ký" + appName,
+        },
+      },
     ],
   },
-  {
-    path: "/login",
-    name: "Đăng nhập",
-    component: Login,
-    meta: {
-      auth: false,
-      title: "Đăng nhập" + appName,
-    },
-  },
+  
   { path: "*", component: NotFound },
   { path: "/access-denied", component: AccessDenied },
 ];

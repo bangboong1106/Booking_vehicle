@@ -12,6 +12,11 @@ use App\Common\AppConstant;
 class GoodsTypeClientRepository extends GoodsTypeRepository
 {
 
+    protected function getIgnoreClientID()
+    {
+        return true;
+    }
+    
     protected function getClientColumns($clientID, $customerID, $table_name)
     {
         $columns = [
@@ -24,6 +29,9 @@ class GoodsTypeClientRepository extends GoodsTypeRepository
             DB::raw('goods_group.code as goods_group_code'),
             DB::raw('goods_group.name as goods_group_name'),
         ];
+        if ($customerID) {
+            $columns[] = DB::raw("IF(locations.ins_id = $customerID ,TRUE,FALSE) as is_allow_update");
+        }
         return $columns;
     }
 
