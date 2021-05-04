@@ -1,134 +1,73 @@
 <template>
   <div class="container">
-    <a-card
-      title="Đăng nhập"
-      :bordered="true"
-      style="width: 600px; margin: auto"
-    >
-      <a-form
-        id="components-form-demo-normal-login"
-        :form="form"
-        class="login-form"
-        @submit.prevent="login"
-        :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }"
-      >
-        <a-form-item label="Tài khoản">
-          <a-input
-            v-decorator="[
-              'username',
-              {
-                rules: [{ required: true, message: 'Yêu cầu nhập tài khoản!' }],
-              },
-            ]"
-            v-model="username"
-            placeholder="Username"
-          >
-            <a-icon
-              slot="prefix"
-              type="user"
-              style="color: rgba(0, 0, 0, 0.25)"
-            />
-          </a-input>
-        </a-form-item>
-        <a-form-item label="Mật khẩu">
-          <a-input-password
-            v-decorator="[
-              'password',
-              {
-                rules: [{ required: true, message: 'Yêu cầu nhập mật khẩu!' }],
-              },
-            ]"
-            v-model="password"
-            type="password"
-            placeholder="Password"
-          >
-            <a-icon
-              slot="prefix"
-              type="lock"
-              style="color: rgba(0, 0, 0, 0.25)"
-            />
-          </a-input-password>
-        </a-form-item>
-        <a-form-item :wrapper-col="{ span: 24 }">
-          <a-button type="primary" html-type="submit" class="login-form-button" style="margin:0 30px">
-            Đăng Nhập
-          </a-button >
-          <router-link :to="'/register'">
-          <a-button type="primary" class="login-form-button">
-            Đăng Ký
-          </a-button></router-link>
-        </a-form-item>
-      </a-form>
-    </a-card>
+    <div class="row justify-content-md-center " style="margin-top:100px">
+      <div class="col-6">
+        <div class="card card-default">
+          <h4 class="card-header">Đăng nhập</h4>
+          <div class="card-body">
+            <div class="alert alert-danger" v-if="has_error && !success">
+              <p v-if="error == 'login_error'">Lỗi xác thực.</p>
+              <p v-else>Tài khoản hoặc mật khẩu của bạn không chính xác</p>
+            </div>
+            <form autocomplete="off" @submit.prevent="login" method="post">
+              <div class="form-group">
+                <label for="username">Tài khoản</label>
+                <input type="text" id="email" class="form-control" placeholder="Tài khoản" v-model="username" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" class="form-control" v-model="password" required>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Đăng nhâp</button>
+                <router-link :to="'register'">  <button class="btn btn-primary">Đăng ký</button> </router-link>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
-import axios from "axios";
-export default {
-  beforeCreate() {
-    this.form = this.$form.createForm(this, {
-      name: "normal_login",
-    });
-  },
-  data() {
-    return {
-      loader: false,
-      username: null,
-      password: null,
-      error: false,
-    };
-  },
-  methods: {
-    login() {
-      var app = this;
-      this.$auth.login({
-        params: {
-          username: app.username,
-          password: app.password,
-        },
-        rememberMe: true,
-        // redirect: '/order',
-        fetchUser: true,
-      });
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          const params = {
-            username: values.username,
-            password: values.password,
-          };
-          
-          axios.post("auth/login", params).then((response) => {
-            if (response.data.status == "success") {
-              this.$message.loading({
-                content: "Đang đăng nhập...",
-              });
-              setTimeout(() => {
-                this.$message.success({
-                  content: "Đăng nhập thành công!",
-                  duration: 2,
-                });
-                this.$router.push("home");
-              }, 500);
-            } else {
-              this.$message.warning("Mật khẩu của bạn không chính xác");
-            }
-          });
-        }
-      });
+  export default {
+    data() {
+      return {
+        username: null,
+        password: null,
+        success: false,
+        has_error: false,
+        error: ''
+      }
     },
-  },
-};
+    mounted() {
+      //
+    },
+    methods: {
+      login() {
+        // get the redirect object
+        var redirect = this.$auth.redirect()
+        var app = this
+        this.$auth.login({
+          data: {
+            username: app.username,
+            password: app.password
+          },
+          success: function() {
+            // handle redirection
+            app.success = true
+            const redirectTo = 'home'
+            this.$message.success('Bạn đã đang nhập thành công');
+            this.$router.push({name: redirectTo})
+          },
+          error: function() {
+            app.has_error = true
+            app.error = res.response.data.error
+          },
+          rememberMe: true,
+          fetchUser: true
+        })
+      }
+    }
+  }
 </script>
-
-<style scoped>
-.login-form {
-  margin: auto;
-}
-
-.container {
-  min-height: 57vh;
-  margin: auto;
-  display: flex;
-}
-</style>

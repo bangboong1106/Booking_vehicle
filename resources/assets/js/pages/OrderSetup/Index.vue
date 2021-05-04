@@ -1,5 +1,6 @@
 <template>
   <div class="order-setup container">
+     <Steps :current="2"/>
     <a-row>
       <a-col :xs="{ span: 24 }" :lg="{ span: 15 }" :md="{ span: 15 }">
         <div>
@@ -50,6 +51,7 @@
 <script>
 import Form from "@/pages/OrderSetup/Form";
 import List from "@/components/Shipping/List";
+import Steps from "@/components/Steps/Steps";
 import EventBus from "@/event-bus";
 
 export default {
@@ -66,7 +68,8 @@ export default {
 
   components: {
     'form-detail': Form,
-    'ship-list': List
+    'ship-list': List,
+    Steps
   },
   methods: {
     selectAllItems(e) {

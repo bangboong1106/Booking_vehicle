@@ -9,6 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ public_url('favicon.png') }}">
     <title>{{config('constant.APP_NAME')}}</title>
     <link rel="stylesheet" href="{{ public_url('.' . mix('css/frontend/app.css')) }}">
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous"> --}}
+    <link href="{{ public_url('css/frontend/autoload/bootstrap.min.css') }}" rel="stylesheet" type="text/css"
+    media="all">
     <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />
     @include('layouts.backend.elements.structures.font_kanit')
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>

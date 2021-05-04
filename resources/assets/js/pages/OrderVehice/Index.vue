@@ -1,5 +1,6 @@
 <template>
   <div class="book-car container">
+    <Steps :current="1"/>
     <a-row :gutter="[16,16]" class="row">
       <a-col :xs="{ span: 24 }" :lg="{ span: 6 }" :md="{ span: 24 }">
         <order-info></order-info>
@@ -28,6 +29,7 @@
 import OrderItem from "@/components/Vehicle/VehicleList";
 import OrderInfo from "@/components/Form/OrderInfor";
 import CartList from "@/components/Carts/CartList";
+import Steps from "@/components/Steps/Steps"
 import constant from "@/constant";
 import EventBus from "@/event-bus";
 
@@ -62,6 +64,7 @@ export default {
     OrderInfo,
     OrderItem,
     'cart-list': CartList,
+    Steps,
   },
   methods: {
     next() {
@@ -94,6 +97,8 @@ export default {
 
 .book-car {
   margin-top: 150px;
+  background: #fff;
+  position: relative;
 }
 
 .list-car {

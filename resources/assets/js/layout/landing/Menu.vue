@@ -1,65 +1,65 @@
 <template>
-<div>
- <a-menu
-            theme="dark"
-            mode="horizontal"
-            :style="{ lineHeight: '64px', backgroundColor: 'transparent' }"
-          v-if="!$auth.check()" 
-          >
-            <a-menu-item
-              :style="{
-                backgroundColor: 'transparent',
-                textTransform: 'uppercase',
-                fontWeight: 'bold',
-              }"
-              :key="menu.key"
-              v-for="menu in routes.unlogged"
-            >
-              <router-link :to="menu.path">{{ menu.name }}</router-link>
-            </a-menu-item>
- </a-menu>
- <a-menu
-            theme="dark"
-            mode="horizontal"
-            :style="{ lineHeight: '64px', backgroundColor: 'transparent' }"
-          v-if="$auth.check()"
-          >
-            <a-menu-item
-              :style="{
-                backgroundColor: 'transparent',
-                textTransform: 'uppercase',
-                fontWeight: 'bold',
-              }"
-            >
-            </a-menu-item>
-            <a-menu-item
-          key="user"
-          :style="{ padding: '0 8px' }"
-          @click="showUserInfo"
+  <div>
+    <a-menu
+      theme="dark"
+      mode="horizontal"
+      :style="{ lineHeight: '64px', backgroundColor: 'transparent' }"
+      v-if="!$auth.check()"
+    >
+      <a-menu-item
+        :style="{
+          backgroundColor: 'transparent',
+          textTransform: 'uppercase',
+          fontWeight: 'bold',
+        }"
+        :key="menu.key"
+        v-for="menu in routes.unlogged"
       >
-        <a-icon type="user" :style="{ marginRight: 0, fontSize: '20px' }"/>
-        {{ this.$auth.user().username }}
+        <router-link :to="menu.path">{{ menu.name }}</router-link>
       </a-menu-item>
- </a-menu>
- <a-drawer
-        width="320"
-        placement="right"
-        :closable="false"
-        :visible="visible"
-        @close="onClose"
+    </a-menu>
+    <a-menu
+      theme="dark"
+      mode="horizontal"
+      :style="{ lineHeight: '64px', backgroundColor: 'transparent' }"
+      v-if="$auth.check()"
+    >
+      <a-menu-item
+        :style="{
+          backgroundColor: 'transparent',
+          textTransform: 'uppercase',
+          fontWeight: 'bold',
+        }"
+      >
+      </a-menu-item>
+      <a-menu-item
+        key="user"
+        :style="{ padding: '0 8px',backgroundColor: 'transparent', }"
+        @click="showUserInfo"
+      >
+        <a-icon type="user" :style="{ marginRight: 0, fontSize: '20px' }" />
+        {{ this.$auth.user().full_name }}
+      </a-menu-item>
+    </a-menu>
+    <a-drawer
+      width="320"
+      placement="right"
+      :closable="false"
+      :visible="visible"
+      @close="onClose"
     >
       <a-row>
         <a-col :span="8"></a-col>
         <a-col :span="12">
-          <a-avatar shape="square" :size="64" icon="user"/>
+          <a-avatar shape="square" :size="64" icon="user" />
         </a-col>
       </a-row>
       <a-row>
         <a-col :span="24">
           <a-descriptions
-              title="Thông tin người dùng"
-              :column="1"
-              :size="'middle'"
+            title="Thông tin người dùng"
+            :column="1"
+            :size="'middle'"
           >
             <a-descriptions-item label="Họ và tên">
               {{ this.$auth.user().full_name }}
@@ -75,11 +75,10 @@
             </a-descriptions-item>
           </a-descriptions>
         </a-col>
-      </a-row
-      >
+      </a-row>
       <a-button type="danger" block @click="logout"> Đăng xuất</a-button>
     </a-drawer>
-        </div>
+  </div>
 </template>
 <script>
 export default {
@@ -96,22 +95,22 @@ export default {
         // LOGGED ADMIN
         admin: [{ name: "Dashboard", path: "admin.dashboard" }],
       },
-      visible:false
+      visible: false,
     };
   },
   mounted() {
     //
   },
   methods: {
-      showUserInfo(){
-          this.visible=true
-      },
-      onClose(){
-          this.visible=false
-      },
-      logout() {
-        this.$message.success('Bạn đã đăng xuất thành công!');
-        this.visible=false
+    showUserInfo() {
+      this.visible = true;
+    },
+    onClose() {
+      this.visible = false;
+    },
+    logout() {
+      this.$message.success("Bạn đã đăng xuất thành công!");
+      this.visible = false;
       this.$auth.logout();
       this.$router.push("login");
     },
@@ -123,7 +122,8 @@ export default {
 .navbar {
   margin-bottom: 30px;
 }
-.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected{
-    background-color:transparent
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background-color: transparent;
 }
 </style>

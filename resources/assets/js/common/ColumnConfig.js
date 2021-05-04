@@ -560,13 +560,13 @@ const OrderDetail = [
     },
     {
         title: 'Đơn giá',
-        key:'price',
-        dataIndex: 'price',
+        key:'amount',
+        dataIndex: 'amount',
     },
     {
         title: 'Thành  tiền',
-        key:'totalprice',
-        dataIndex: 'totalprice',
+        key:'totalPrice',
+        dataIndex: 'totalPrice',
     },
     {
         key:'action',
