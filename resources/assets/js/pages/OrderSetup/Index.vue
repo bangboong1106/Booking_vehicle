@@ -136,7 +136,8 @@ export default {
       }
 
     },
-    checkOut() {
+    checkOut(value) {
+      
     }
   },
 
@@ -145,6 +146,10 @@ export default {
   },
   created() {
     this.totalGoods = JSON.parse(localStorage.getItem('cartDetail')).length;
+    EventBus.$on('submitForm',this.checkOut.value)
+  },
+  destroyed(){
+    EventBus.$off('submitForm',this.checkOut.value)
   }
 };
 </script>

@@ -37,7 +37,7 @@
     "@fullcalendar/interaction": "^5.4.0",
     "@fullcalendar/vue": "^5.4.0",
     "@websanova/vue-auth": "^2.21.14-beta",
-    "ant-design-vue": "^1.7.2",
+    "ant-design-vue": "^1.7.4",
     "apexcharts": "^3.8.6",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-preset-env": "^1.7.0",

@@ -35,7 +35,8 @@
       >
         <a-space direction="vertical" style="width:100%">
           <a-date-picker
-
+              format="YYYY-MM-DD"
+              :disabled-date="disabledDate"
               @change="startDate"
               placeholder="Chọn ngày nhận xe"/>
         </a-space>
@@ -58,7 +59,7 @@
 
 <script>
 import CommonSelect from "@/components/Select/CommonSelect";
-
+import moment from 'moment';
 export default {
   components: {
     'common-select': CommonSelect
@@ -74,7 +75,11 @@ export default {
     }
   },
   methods: {
-
+    moment,
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current < moment().subtract(1,'day').endOf('day');
+    },
     startDate(date,dateString){
       this.form.startTime = {value : dateString}
     },

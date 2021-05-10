@@ -4,7 +4,7 @@
     <div class="type-ship">
         <div class="list-items-ship">
             <div class="item-ship-content" v-for="(item,index) in listItemShipType" :key="index">
-                <a-radio-group name="radioGroup" v-model="value" @change="onChangeRadio">
+                <a-radio-group name="radioGroup"  @change="onChangeRadio">
                     <a-radio :value="`${item.title} :giá ${item.amount}`">
                         {{ item.title }}
                     </a-radio>
@@ -51,14 +51,7 @@ export default ({
                 description: 'Vận tải ô tô kín là loại hình vận tải ô tô có thêm tính năng bảo vệ cho phương tiện.  Đó là một lựa chọn vận chuyển bằng ô tô tuyệt vời nếu bạn cần vận chuyển một chiếc xe cổ điển hoặc sang trọng.  ',
                 estimated_delivery_time: 'Thời gian giao hàng dự kiến từ 2-4 ngày',
                 amount: '1.500.000'
-            }, {
-                id: 3,
-                title: 'Loại hình vận chuyển đường biển',
-                avatar: 'https://vantaiduongbien.com.vn/upload/detail/2018/08/images/van-tai-duong-bien-1(2).jpg',
-                description: 'Vận tải ô tô mở là loại hình vận chuyển ô tô phổ biến nhất . Vận chuyển bằng ô tô mở dễ sắp xếp hơn vận chuyển bằng ô tô kín . Do các hãng xe thùng hở có thể chứa 8 đến 10 xe.',
-                estimated_delivery_time: 'Thời gian giao hàng dự kiến từ 2-4 ngày',
-                amount: '2.000.000'
-            }
+            },
 
         ]
         return {

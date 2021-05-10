@@ -40,22 +40,7 @@ export default {
     return {
       typeOfCar,
       typeOfMoto,
-      current: 1,
       textFilter:"",
-      steps: [
-        {
-          title: 'Bước 1',
-          content: 'Điền thông tin',
-        },
-        {
-          title: 'Bước 2',
-          content: 'Chọn các loại xe',
-        },
-        {
-          title: 'Bước 3',
-          content: 'Đặt xe',
-        },
-      ],
     };
 
   },
@@ -67,16 +52,6 @@ export default {
     Steps,
   },
   methods: {
-    next() {
-      this.current++;
-    },
-    prev() {
-      this.current--;
-      if (this.current === 0) {
-        this.$router.push('home')
-      }
-      ;
-    },
     onSearch(value){
       EventBus.$emit('getTextFilter',value)
 

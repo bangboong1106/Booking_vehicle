@@ -6,51 +6,35 @@
           <a-col :xs="{ span: 24 }" :sm="{ span: 12 }">
             <a-descriptions title="Thông tin chung" :column="2">
               <a-descriptions-item label="Địa điểm nhận">
-                <div v-if="!editing">
-                  {{ formData.locationDestination.label }}
-                </div>
-                <a-input
-                  v-else=""
-                  v-model="location"
-                  @blur="doneEdit"
-                  @keyup.enter="doneEdit"
-                  @keyup.esc="cancelEdit"
-                ></a-input>
+                {{ formData.locationDestination.label }}
               </a-descriptions-item>
-              <span> <a-icon type="edit" @click="editLocation" /></span>
+              <!-- <span> <a-icon type="edit" @click="editLocation" /></span> -->
               <a-descriptions-item label="Địa điểm trả">
-                <div v-if="!editing2">
-                  {{ formData.locationArrival.label }}
-                </div>
-                <a-input
-                  v-else=""
-                  v-model="location2"
-                  @blur="doneEdit"
-                  @keyup.enter="doneEdit"
-                  @keyup.esc="cancelEdit"
-                ></a-input>
+                {{ formData.locationArrival.label }}</a-input>
               </a-descriptions-item>
-              <span> <a-icon type="edit" @click="editLocation2" /></span>
+              <!-- <span> <a-icon type="edit" @click="editLocation2" /></span> -->
+               <a-descriptions-item label="Tổng quãng đường">
+                {{ distance.distance }} km
+              </a-descriptions-item>
               <a-descriptions-item label="Ngày nhận xe">
                 {{ formData.startTime.value.split("-").reverse().join("-") }}
-              </a-descriptions-item>
-
-              <a-descriptions-item label="Tổng tiền">
-                69.960.000 ₫
               </a-descriptions-item>
               <a-descriptions-item label="Loại hình vận chuyển">
                 {{ typeShip }}
               </a-descriptions-item>
+              <a-descriptions-item label="Tổng tiền">
+                69.960.000 ₫
+              </a-descriptions-item>
             </a-descriptions>
           </a-col>
-
+          <!-- form điền thông tin -->
           <a-col :xs="{ span: 24 }" :sm="{ span: 12 }">
-            <a-descriptions title="Thông tin người gửi">
-              <a-form :form="form" @submit="handleSubmit">
+                          <a-form :form="form" @submit="handleSubmit">
+            <a-descriptions title="Thông tin người gửi"/>
                 <a-form-item v-bind="formItemLayout" label="E-mail">
                   <a-input
                     v-decorator="[
-                      'email',
+                      'emailsender',
                       {
                         rules: [
                           {
@@ -70,7 +54,7 @@
                   <span slot="label"> Họ Tên&nbsp; </span>
                   <a-input
                     v-decorator="[
-                      'nickname',
+                      'fullnamesender',
                       {
                         rules: [
                           {
@@ -86,7 +70,7 @@
                 <a-form-item v-bind="formItemLayout" label="Số điện thoại">
                   <a-input
                     v-decorator="[
-                      'phone',
+                      'phonesender',
                       {
                         rules: [
                           {
@@ -107,25 +91,11 @@
                     </a-select>
                   </a-input>
                 </a-form-item>
-              </a-form>
-            </a-descriptions>
-            <a-checkbox-group @change="onChange" :default-value="['A']">
-              <a-row>
-                <a-col :span="24">
-                  <a-checkbox value="A">
-                    Sử dụng thông tin này làm thông tin nhận hàng
-                  </a-checkbox>
-                </a-col>
-                <a-col :span="24">
-                  <a-checkbox value="true">
-                    Sử dụng thông tin này làm thông tin nhận hàng
-                  </a-checkbox>
-                  <a-descriptions v-if="isCheck" title="Thông tin người nhận">
-                    <a-form :form="form" @submit="handleSubmit">
+                  <a-descriptions title="Thông tin người nhận"/> 
                       <a-form-item v-bind="formItemLayout" label="E-mail">
                         <a-input
                           v-decorator="[
-                            'email',
+                            'emailreceiver',
                             {
                               rules: [
                                 {
@@ -145,7 +115,7 @@
                         <span slot="label"> Họ Tên&nbsp; </span>
                         <a-input
                           v-decorator="[
-                            'nickname',
+                            'fullnamereceiver',
                             {
                               rules: [
                                 {
@@ -164,7 +134,7 @@
                       >
                         <a-input
                           v-decorator="[
-                            'phone',
+                            'phonereceiver',
                             {
                               rules: [
                                 {
@@ -178,18 +148,14 @@
                         >
                           <a-select
                             slot="addonBefore"
-                            v-decorator="['prefix', { initialValue: '86' }]"
+                            v-decorator="['prefix', { initialValue: '84' }]"
                             style="width: 70px"
                             :value="+84"
                           >
                           </a-select>
                         </a-input>
                       </a-form-item>
-                    </a-form>
-                  </a-descriptions>
-                </a-col>
-              </a-row>
-            </a-checkbox-group>
+              </a-form>                
           </a-col>
         </a-row>
       </div>
@@ -229,7 +195,7 @@
         </a-table>
       </div>
     </div>
-    <div class="grid-item-mobile">
+    <!-- <div class="grid-item-mobile">
       <div class="list-item">
         <div class="item" v-for="(item, index) in orderDetail" :key="index">
           <div class="item-avatar">
@@ -259,7 +225,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -267,8 +233,12 @@
 import EventBus from "@/event-bus";
 import moment from "moment";
 import ColumnConfig from "@/common/ColumnConfig";
+import axios from 'axios';
 
 export default {
+  beforeCreate() {
+    this.form = this.$form.createForm(this, { name: "register" });
+  },
   component: {},
   props: {
     typeShip: String,
@@ -276,10 +246,10 @@ export default {
   data() {
     const columns = ColumnConfig["OrderDetail"];
     return {
-      typeShip: "...",
       dateFormat: "YYYY/MM/DD",
       orderDetail: [],
       formData: {},
+      distance:[],
       columns,
       selectedRowKeys: [],
       formLayout: "horizontal",
@@ -315,6 +285,23 @@ export default {
     moment,
     getFormData() {
       this.formData = JSON.parse(localStorage.getItem("cart"));
+      let locationDestinationID=this.formData.locationDestination.key
+      let locationArrivalID=this.formData.locationArrival.key
+      axios.post('c-order/cal-distance',
+              {
+                location_destination_id: locationDestinationID,
+                location_arrival_id: locationArrivalID,
+              }).then((response) => {
+            if (response.data.errorCode != 0) {
+              this.$message.error(response.data.errorMessage.map((p) => p.errorMessage).join("\n"))
+            }
+            else{
+              this.distance=response.data.data
+            }
+            }) .catch((error) => {
+            
+            this.$message.error(error.message);
+          });
     },
     getDatalist() {
       if (!localStorage.getItem("cartDetail")) {
@@ -322,10 +309,10 @@ export default {
       }
       this.orderDetail = JSON.parse(localStorage.getItem("cartDetail"));
       this.orderDetail.map((p) => {
-                  p.totalPrice = p.amount * p.quantity; 
-                })
+        p.totalPrice = p.amount * p.quantity;
+      });
       this.orderDetail.forEach((d) => {
-        return (d.amount =d.amount * 0.02);
+        return (d.amount = d.amount * 0.02);
       });
     },
     onSelectChange(selectedRowKeys) {
@@ -353,41 +340,12 @@ export default {
     reload() {
       this.cartList = JSON.parse(localStorage.getItem("cartDetail"));
     },
-    editLocation() {
-      this.location = this.formData.locationDestination.label;
-      this.editing = true;
-      this.editing2 = false;
-    },
-    editLocation2() {
-      this.location2 = this.formData.locationArrival.label;
-      this.editing2 = true;
-      this.editing = false;
-    },
-    doneEdit() {
-      this.beforeEditCahe = this.formData.locationDestination.label;
-      this.beforeEditCahe2 = this.formData.locationArrival.label;
-      if (this.location.trim() == "") {
-        this.location = this.beforeEditCahe;
-      }
-      if (this.location2.trim() == "") {
-        this.location2 = this.beforeEditCahe2;
-      }
-      this.editing = false;
-      this.editing2 = false;
-      this.formData.locationDestination.label = this.location;
-      this.formData.locationArrival.label = this.location2;
-      localStorage.setItem("cart", JSON.stringify(this.formData));
-    },
-
-    cancelEdit() {
-      this.formData.locationDestination.label = this.beforEditCache;
-      this.editing = false;
-    },
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
+          EventBus.$emit("submitForm", this.values);
         }
       });
     },

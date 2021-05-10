@@ -22,6 +22,9 @@ Route::post('c-login', 'ApiAppClient\AuthIntegrationController@loginM');
 Route::post('na/c-goods-group/list', 'ApiAppClient\ApiWithoutAuthentication\GoodsGroupApiController@list');
 Route::post('na/c-goods/list', 'ApiAppClient\ApiWithoutAuthentication\GoodsApiController@list');
 Route::post('na/c-location/list', 'ApiAppClient\ApiWithoutAuthentication\LocationApiController@list');
+Route::post('na/c-typeship/list', 'ApiAppClient\ApiWithoutAuthentication\TypeShipApiController@list');
+Route::post('c-order/cal-distance', 'ApiAppClient\OrderApiController@calcOrderDistance');
+
 
 
 Route::group(['middleware' => 'fjwt.auth'], function () {

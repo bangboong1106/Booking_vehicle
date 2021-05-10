@@ -17,8 +17,8 @@
 
       <a-spin v-if="fetching" slot="notFoundContent" size="small"/>
       <a-icon slot="clearIcon" type="close" @click="clearSearchValue()"/>
-      <a-select-option v-for="(d,index) in listLocations" :key="index" >
-        {{ d.title }}
+      <a-select-option v-for="d in listLocations" :key="d.value" >
+        {{ d.text }}
       </a-select-option>
     </a-select>
 
@@ -45,7 +45,7 @@ export default {
       listLocations: [],
       fetching: false,
       params: {
-        pageSize: 20,
+        pageSize: 50,
         pageIndex: 1,
         filters: [],
       },
@@ -56,18 +56,27 @@ export default {
     this.onSelected()
   },
   methods: {
-    fetchData() {
+    fetchData(value) {
       this.fetching = true;
+      this.listLocations=[]
       axios
-          .post('na/c-location/list', this.params)
+          .post('na/c-location/list',
+              {
+                pageSize: 50,
+                pageIndex: 1,
+                textSearch: value
+              })
           .then((response) => {
+            this.fetching = false;
             if (response.data.errorCode != 0) {
               this.$message.error(response.data.errorMessage.map((p) => p.errorMessage).join("\n"))
             } else {
-              this.listLocations = response.data.data.items;
-              this.fetching = false;
+              let data = response.data.data.items.map(location => ({
+                text: location.title,
+                value: location.id
+              }));
+              this.listLocations = this.listLocations.concat(data);
             }
-
           })
           .catch((error) => {
             this.fetching = false;
@@ -75,11 +84,8 @@ export default {
           });
     },
     onFocus() {
-      if (this.params.filters.length == 0) {
-        this.fetchData()
-      } else {
-        this.fetchData()
-      }
+      this.listLocations = [];
+      this.fetchData()
 
     },
     clearSearchValue() {

@@ -15,12 +15,14 @@
 <script>
 export default {
     props: {
-        current: Number,
-        
+        current:{
+        type:Number,
+        default:0 
+} , 
     },
     data() {
         return {
-            current: 0,
+            
             steps: [{
                     title: 'Bước 1',
                     // content: 'First-content',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\ApiAppClient;
 use App\Common\AppConstant;
 use App\Common\HttpCode;
 use App\Http\Controllers\Base\ClientApiController;
+use App\Model\Entities\OrderCustomer;
 use App\Model\Entities\OrderCustomerGoods;
 use App\Model\Entities\OrderCustomerHistory;
 use App\Repositories\AdminUserInfoRepository;
@@ -15,6 +16,7 @@ use App\Repositories\GoodsTypeRepository;
 use App\Repositories\LocationRepository;
 use App\Services\NotificationService;
 use App\Services\OrderCustomerService;
+use DateTime;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -437,6 +439,88 @@ class OrderCustomerApiController extends ClientApiController
                     'errorMessage' => $exception->getMessage()
                 ]
             );
+        }
+    }
+
+    public function save(Request $request)
+    {
+        try {
+            $validation = Validator::make($request->all(), [
+                'location_destination_id' => 'required',
+                'location_arrival_id' => 'required',
+                'ETD_date' => 'required',
+                'ETD_time' => 'required',
+                'ETA_date' => 'required',
+                'ETA_time' => 'required',
+
+
+            ]);
+            if ($validation->fails()) {
+                return response()->json([
+                    'errorCode' => HttpCode::EC_BAD_REQUEST,
+                    'errorMessage' => $validation->messages()
+                ]);
+            }
+            $userId = Auth::User()->id;
+
+            $entity = new OrderCustomer();
+            if (!empty($request['id'])) {
+                $entity = $this->getRepository()->getItemById($request['id']);
+            } else {
+                $systemCode = app('App\Http\Controllers\Backend\SystemCodeConfigController')->generateSystemCode(config('constant.sc_order_customer'), null, true);
+                $entity->code = $entity->order_no = $entity->name = $systemCode;
+                $currentDay = new DateTime();
+                $entity->order_date = $currentDay->format('Y-m-d');
+            }
+            $entity->source_creation = config('constant.FROM_CLIENT');
+            $entity->is_approved = 1;
+            $customer = $this->getCustomerRepository()->getCustomerByUserId($userId);
+            if ($customer) {
+                $entity->customer_id = $customer->id;
+                $entity->customer_name = $customer->full_name;
+                $entity->customer_mobile_no = $customer->mobile_no;
+            }
+            $entity->ETD_date = empty($request['ETD_date']) ? null : AppConstant::convertDate($request['ETD_date'], 'Y-m-d');
+            $entity->ETD_time = $request['ETD_time'];
+            $entity->ETA_date = empty($request['ETA_date']) ? null : AppConstant::convertDate($request['ETA_date'], 'Y-m-d');
+            $entity->ETA_time = $request['ETA_time'];
+
+            $entity->distance = empty($request['distance']) ? 0 : $request['distance'];
+            $entity->weight = empty($request['weight']) ? 0 : $request['weight'];
+            $entity->volume = empty($request['volume']) ? 0 : $request['volume'];
+
+            $entity->location_destination_id = empty($request['location_destination_id']) ? '' : $request['location_destination_id'];
+            $entity->location_arrival_id = empty($request['location_arrival_id']) ? '' : $request['location_arrival_id'];
+
+            DB::beginTransaction();
+
+            $entity->save();
+
+            if ($request['listVehicleGroup']) {
+                $data = [];
+                foreach ($request['listVehicleGroup'] as $item) {
+                    $data[] = [
+                        'order_customer_id' => $entity->id,
+                        'vehicle_group_id' => empty($item['vehicle_group_id']) ? 0 : $item['vehicle_group_id'],
+                        'vehicle_number' => empty($item['vehicle_number']) ? 1 : $item['vehicle_number']
+                    ];
+                }
+                $entity->listVehicleGroups()->detach();
+                $entity->listVehicleGroups()->sync($data);
+            }
+
+            DB::commit();
+            return response()->json([
+                'errorCode' => HttpCode::EC_OK,
+                'errorMessage' => '',
+            ]);
+        } catch (Exception $exception) {
+            logError($exception);
+            DB::rollBack();
+            return response()->json([
+                'errorCode' => HttpCode::EC_APPLICATION_ERROR,
+                'errorMessage' => HttpCode::getMessageForCode(HttpCode::EC_APPLICATION_ERROR)
+            ]);
         }
     }
 }

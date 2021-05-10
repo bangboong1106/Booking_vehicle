@@ -185,7 +185,7 @@ class GoogleConstant
      * @param  integer $decimals - precision
      * @return string             - distance
      */
-    public function getDistanceBetween($point1, $point2, $unit = 'm', $decimals = 2)
+    public function getDistanceBetween($point1, $point2, $unit = 'km', $decimals = 2)
     {
         // Calculate the distance in degrees using Hervasine formula
         $degrees = $this->calcDistanceWithHervasine($point1, $point2);
