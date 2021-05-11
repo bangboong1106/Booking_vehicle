@@ -27,7 +27,7 @@ class OrderCustomerValidator extends BaseValidator
             'location_arrival_id' => 'required',
             'ETD_date' => 'required',
             'ETD_time' => 'required',
-            'ETA_date' => 'required|after_or_equal:ETD_date',
+            // 'ETA_date' => 'required|after_or_equal:ETD_date',
             'ETA_time' => 'after_if_ETA_date:ETD_date,ETA_date,ETD_time|required',
         ];
         return $rules;
@@ -75,7 +75,7 @@ class OrderCustomerValidator extends BaseValidator
     {
         return [
             'location_destination_id.required' => trans('validation.required', ['attribute' => trans('models.order_customer.attributes.location_destination')]),
-            'location_arrival_id.required' => trans('validation.required', ['attribute' => trans('models.order_customer.attributes.location_arrival')]),
+            // 'location_arrival_id.required' => trans('validation.required', ['attribute' => trans('models.order_customer.attributes.location_arrival')]),
 
             '*.code.distinct' => trans('validation.distinct', ['attribute' => trans('models.order_customer.attributes.code')]),
             '*.code.required' => trans('validation.required', ['attribute' => trans('models.order_customer.attributes.code')]),

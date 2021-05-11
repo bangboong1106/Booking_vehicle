@@ -101,7 +101,7 @@ class OrderValidator extends BaseValidator
                 . '|required_if:status,' . config("constant.DANG_VAN_CHUYEN") . '|required_if:status,' . config("constant.HOAN_THANH") . '|required_if:status,' . config("constant.TAI_XE_XAC_NHAN"),
             'locationArrivals.0.time_reality' => 'after_if_ETA_date_reality:locationDestinations.0.date_reality,locationArrivals.0.date_reality,locationDestinations.0.time_reality|required_if:status,' . config('constant.HOAN_THANH'),
             'locationDestinations.0.time_reality' => 'required_if:status,' . config('constant.HOAN_THANH') . ',' . config('constant.DANG_VAN_CHUYEN'),
-            'locationArrivals.0.date_reality' => 'required_if:status,' . config('constant.HOAN_THANH') . '|nullable|after_or_equal:locationDestinations.0.date_reality',
+            // 'locationArrivals.0.date_reality' => 'required_if:status,' . config('constant.HOAN_THANH') . '|nullable|after_or_equal:locationDestinations.0.date_reality',
             'locationDestinations.0.date_reality' => 'required_if:status,' . config('constant.HOAN_THANH') . ',' . config('constant.DANG_VAN_CHUYEN'),
 
             'locationDestinations.0.location_id' => 'required',
@@ -109,7 +109,7 @@ class OrderValidator extends BaseValidator
 
             'locationDestinations.0.date' => 'nullable|required',
             'locationDestinations.0.time' => 'nullable|required',
-            'locationArrivals.0.date' => 'nullable|required|after_or_equal:locationDestinations.0.date',
+            // 'locationArrivals.0.date' => 'nullable|required|after_or_equal:locationDestinations.0.date',
             'locationArrivals.0.time' => 'after_if_ETA_date:locationDestinations.0.date,locationArrivals.0.date,locationDestinations.0.time|required',
             'number_of_delivery_points' => 'nullable|min:0',
             'number_of_arrival_points' => 'nullable|min:0',
@@ -157,8 +157,8 @@ class OrderValidator extends BaseValidator
                 ['attribute' => trans('models.order.attributes.ETA_time_reality')]),
             'locationDestinations.0.time_reality.required_if' => trans('validation.required',
                 ['attribute' => trans('models.order.attributes.ETD_time_reality')]),
-            'locationArrivals.0.date_reality.required_if' => trans('validation.required',
-                ['attribute' => trans('models.order.attributes.ETA_date_reality')]),
+            // 'locationArrivals.0.date_reality.required_if' => trans('validation.required',
+            //     ['attribute' => trans('models.order.attributes.ETA_date_reality')]),
             'locationDestinations.0.date_reality.required_if' => trans('validation.required',
                 ['attribute' => trans('models.order.attributes.ETD_date_reality')]),
 
@@ -170,7 +170,7 @@ class OrderValidator extends BaseValidator
                 ['attribute' => trans('models.order.attributes.location_arrival')]),
             'locationArrivals.0.date.required_unless' => 'Ngày trả hàng là bắt buộc trừ khi trạng thái đơn hàng là Khởi tạo',
             'locationArrivals.0.time.required_unless' => 'Giờ trả hàng là bắt buộc trừ khi trạng thái đơn hàng là Khởi tạo',
-            'locationArrivals.0.date.after_or_equal' => 'Ngày trả hàng phải lớn hơn hoặc bằng Ngày nhận hàng',
+            // 'locationArrivals.0.date.after_or_equal' => 'Ngày trả hàng phải lớn hơn hoặc bằng Ngày nhận hàng',
             'customer_id.required_unless_if' => trans('validation.required'),
             'locationArrivals.0.date_reality.after_or_equal' => 'Ngày trả hàng thực tế phải lớn hơn hoặc bằng Ngày nhận hàng thực tế',
 

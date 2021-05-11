@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\ApiAppClient;
 
 use App\Common\AppConstant;
 use App\Common\HttpCode;
+use App\Common\GoogleConstant;
 use App\Http\Controllers\Base\ClientApiController;
 use App\Model\Entities\Order;
 use App\Model\Entities\OrderCustomerReview;
@@ -885,4 +886,71 @@ class OrderApiController extends ClientApiController
             );
         }
     }
+
+    // Api tính khoảng cách
+    public function calcOrderDistance(Request $request)
+    {
+        try {
+            $validation = Validator::make($request->all(), [
+                'location_destination_id' => 'required',
+                'location_arrival_id' => 'required'
+            ]);
+            if ($validation->fails()) {
+                return response()->json([
+                    'errorCode' => HttpCode::EC_BAD_REQUEST,
+                    'errorMessage' => $validation->messages()
+                ]);
+            }
+            $locationDestinationId = $request->get('location_destination_id', 0);
+            $locationArrivalId = $request->get('location_arrival_id', 0);
+ 
+            $distance = 0;
+            $googleConstant = new GoogleConstant(env('GOOGLE_MAP_API_KEY', ''));
+ 
+            $locationDestination = $this->getLocationRepos()->getLocationsById($locationDestinationId);
+            $locationArrival = $this->getLocationRepos()->getLocationsById($locationArrivalId);
+ 
+            if ($locationDestination && $locationArrival) {
+                // $distance = $googleConstant->calculateDistance($locationDestination->full_address, $locationArrival->full_address);
+                if ($distance <= 0) {
+                    $latLongDestination = $googleConstant->convertDMSToLatLong($locationDestination->ward_location);
+                    $latLongArrival = $googleConstant->convertDMSToLatLong($locationArrival->ward_location);
+ 
+                    if (!empty($latLongDestination) && !empty($latLongArrival)) {
+                        $pointDestination = [
+                            'lat' => $latLongDestination['latitude'],
+                            'lng' => $latLongDestination['longitude']
+                        ];
+                        $pointArrival = [
+                            'lat' => $latLongArrival['latitude'],
+                            'lng' => $latLongArrival['longitude']
+                        ];
+ 
+                        $distance = $googleConstant->getDistanceBetween($pointDestination, $pointArrival);
+                    }
+                }
+            }
+            return response()->json([
+                'errorCode' => HttpCode::EC_OK,
+                'errorMessage' => '',
+                'data' => [
+                    'distance' => $distance,
+                    'location_destination_id' => $locationDestination ? $locationDestination->id : 0,
+                    'location_destination_full_address' => $locationDestination ? $locationDestination->full_address : '',
+                    'location_arrival_id' => $locationArrival ? $locationArrival->id : 0,
+                    'location_arrival_full_address' => $locationArrival ? $locationArrival->full_address : ''
+                ]
+            ]);
+ 
+        } catch (Exception $exception) {
+            logError($exception);
+            return response()->json(
+                [
+                    'errorCode' => HttpCode::EC_APPLICATION_ERROR,
+                    'errorMessage' => HttpCode::getMessageForCode(HttpCode::EC_APPLICATION_ERROR)
+                ]
+            );
+        }
+    }
 }
+

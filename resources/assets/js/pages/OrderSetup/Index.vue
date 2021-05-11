@@ -2,17 +2,17 @@
   <div class="order-setup container">
      <Steps :current="2"/>
     <a-row>
-      <a-col :xs="{ span: 24 }" :lg="{ span: 15 }" :md="{ span: 15 }">
+      <a-col :xs="{ span: 24 }" :lg="{ span: 24 }" :md="{ span: 24 }">
         <div>
           <form-detail @onCountSelectedItem="totalSelectedItem" :key="key" ></form-detail>
         </div>
       </a-col>
       <a-col :xs="{ span: 24 }" :lg="{ span: 1 }" :md="{ span: 1 }" ></a-col>
-      <a-col :xs="{ span: 24 }" :lg="{ span: 8 }" :md="{ span: 8 }">
+      <!-- <a-col :xs="{ span: 24 }" :lg="{ span: 8 }" :md="{ span: 8 }">
         <div>
           <ship-list></ship-list>
         </div>
-      </a-col>
+      </a-col> -->
       <a-col :xs="{ span: 24 }" :lg="{ span: 24 }" :md="{ span: 24 }" class="order-setup-footer">
         <div class="order-setup-footer">
           <div class="order-setup-footer__row1">
@@ -50,7 +50,7 @@
 </template>
 <script>
 import Form from "@/pages/OrderSetup/Form";
-import List from "@/components/Shipping/List";
+// import List from "@/components/Shipping/List";
 import Steps from "@/components/Steps/Steps";
 import EventBus from "@/event-bus";
 
@@ -68,7 +68,6 @@ export default {
 
   components: {
     'form-detail': Form,
-    'ship-list': List,
     Steps
   },
   methods: {
@@ -164,6 +163,7 @@ export default {
   margin-top: 100px;
   background: #fff;
   position: relative;
+  padding: 10px 20px;
 }
 
 .order-setup-footer {

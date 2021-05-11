@@ -94,9 +94,8 @@ export default {
       this.cartList = JSON.parse(localStorage.getItem("cartDetail"));
     },
     order(){
-      this.$emit('closeCart')
       this.$router.push('order-setup');
-
+      EventBus.$emit('orderNow')
     },
     onchangeQuantity(value,item,index){
       item.quantity=value

@@ -19,9 +19,6 @@
               <a-descriptions-item label="Ngày nhận xe">
                 {{ formData.startTime.value.split("-").reverse().join("-") }}
               </a-descriptions-item>
-              <a-descriptions-item label="Loại hình vận chuyển">
-                {{ typeShip }}
-              </a-descriptions-item>
               <a-descriptions-item label="Tổng tiền">
                 69.960.000 ₫
               </a-descriptions-item>
