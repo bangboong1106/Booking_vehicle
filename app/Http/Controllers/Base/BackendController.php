@@ -472,12 +472,12 @@ class BackendController extends BaseController
     {
         $this->_checkPermission('delete');
 
-        if (!$this->getRepository()->_hasDelete($id))
-            return $this->_backToStart()->with('has_delete_modal', "true");
+        // if (!$this->getRepository()->_hasDelete($id))
+        //     return $this->_backToStart()->with('has_delete_modal', "true");
 
-        //Neu doi tuong da duoc su dung thì ko xoa
-        if ($this->getRepository()->_isUsed($id))
-            return $this->_backToStart()->with('used_message', "true");
+        // //Neu doi tuong da duoc su dung thì ko xoa
+        // if ($this->getRepository()->_isUsed($id))
+        //     return $this->_backToStart()->with('used_message', "true");
 
         $isValid = $this->getRepository()->getValidator()->validateDestroy($id);
         if (!$isValid) {

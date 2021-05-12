@@ -33,16 +33,16 @@
             {!!isset($dbclick) && !$dbclick ? "data-dbclick='off'" : "" !!}
             >
             @include('layouts.backend.elements.list_to_checkbox', ['id' => $entity->id])
-            @if($is_action || (isset($entity->is_action) && $entity->is_action == 1))
+            {{--  @if($is_action || (isset($entity->is_action) && $entity->is_action == 1))  --}}
                 {{-- @if(isset($is_show_history) && !$is_show_history)
                     @include('layouts.backend.elements.list_to_action')
                 @else
                     @include('layouts.backend.elements.list_to_action', ['history' => $sticky["attribute"]])
                 @endif --}}
                 @include('layouts.backend.elements.list_to_action', $configAction)
-            @elseif(isset($entity->is_action))
+            {{--  @elseif(isset($entity->is_action))
                 <td></td>
-            @endif
+            @endif  --}}
             @if(isset($configList)  && count($configList) > 0)
                 @foreach($configList as $key=>$config)
                     @if($config['shown'])

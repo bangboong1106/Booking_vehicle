@@ -14,7 +14,7 @@
               </a-descriptions-item>
               <!-- <span> <a-icon type="edit" @click="editLocation2" /></span> -->
                <a-descriptions-item label="Tổng quãng đường">
-                {{ distance.distance }} km
+                {{ distance }} km
               </a-descriptions-item>
               <a-descriptions-item label="Ngày nhận xe">
                 {{ formData.startTime.value.split("-").reverse().join("-") }}
@@ -245,8 +245,9 @@ export default {
     return {
       dateFormat: "YYYY/MM/DD",
       orderDetail: [],
+      detailOrderSelect:[],
       formData: {},
-      distance:[],
+      distance:null,
       columns,
       selectedRowKeys: [],
       formLayout: "horizontal",
@@ -284,6 +285,7 @@ export default {
       this.formData = JSON.parse(localStorage.getItem("cart"));
       let locationDestinationID=this.formData.locationDestination.key
       let locationArrivalID=this.formData.locationArrival.key
+      
       axios.post('c-order/cal-distance',
               {
                 location_destination_id: locationDestinationID,
@@ -293,7 +295,8 @@ export default {
               this.$message.error(response.data.errorMessage.map((p) => p.errorMessage).join("\n"))
             }
             else{
-              this.distance=response.data.data
+              this.distance=response.data.data.distance
+              this.$emit('calcdistance', this.distance)
             }
             }) .catch((error) => {
             
@@ -314,6 +317,16 @@ export default {
     },
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys;
+      this.detailOrderSelect=[]
+        for (let i = 0; i < this.selectedRowKeys.length; i++) {
+        this.detailOrderSelect.push(
+          this.orderDetail.filter(
+            (item, index) => item.id == this.selectedRowKeys[i]
+          )[0]
+        );
+      }
+      console.log(this.detailOrderSelect)
+       
       this.$emit("onCountSelectedItem", this.selectedRowKeys);
     },
     onCheckAll(data) {
@@ -350,11 +363,7 @@ export default {
       this.isCheck = !this.isCheck;
     },
   },
-  beforeCreate() {
-    this.form = this.$form.createForm(this, {
-      name: "register",
-    });
-  },
+  
   beforeMount() {
     this.getDatalist();
     this.getFormData();

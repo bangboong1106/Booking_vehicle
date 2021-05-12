@@ -547,13 +547,13 @@ class BaseController extends Controller
                 return $this->_backToStart()->withErrors(trans('messages.delete_failed'));
             }
             //Neu doi tuong da duoc su dung thì ko xoa
-            foreach ($ids as $id) {
-                if (!$this->getRepository()->_hasDelete($id))
-                    return $this->_backToStart()->with('has_delete_modal', "true");
+            // foreach ($ids as $id) {
+            //     if (!$this->getRepository()->_hasDelete($id))
+            //         return $this->_backToStart()->with('has_delete_modal', "true");
 
-                if ($this->getRepository()->_isUsed($id))
-                    return $this->_backToStart()->with('used_message', "true");
-            }
+            //     if ($this->getRepository()->_isUsed($id))
+            //         return $this->_backToStart()->with('used_message', "true");
+            // }
             foreach ($ids as $id) {
                 $entity = $this->getRepository()->find($id);
                 $entity->delete();

@@ -7,12 +7,11 @@
 <td class="text-center text-middle list-action">
     @can('edit ' . $permission)
         @if (!isset($entity->is_lock) || (isset($entity->is_lock) && $entity->is_lock == 0))
-            @if (isset($routePrefix) && ($routePrefix != 'order' || ($routePrefix == 'order' && $entity->status_partner == config('constant.PARTNER_YEU_CAU_SUA'))))
+            {{--  @if (isset($routePrefix) && ($routePrefix != 'order' || ($routePrefix == 'order' && $entity->status_partner == config('constant.PARTNER_YEU_CAU_SUA'))))  --}}
             <a href="{{ route($edit_route, $entity->id) . '?' . (isset($backUrlKey) ? 'backUrlKey=' . $backUrlKey : '') . '&shown=' . (isset($showAdvance) ? true : false) }}"
                 data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ trans('actions.edit') }}">
                 <i class="fa fa-pencil"></i>
             </a>
-            @endif
         @endif
     @endcan
     @can('add ' . $permission)

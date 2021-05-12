@@ -449,11 +449,6 @@ class OrderCustomerApiController extends ClientApiController
                 'location_destination_id' => 'required',
                 'location_arrival_id' => 'required',
                 'ETD_date' => 'required',
-                'ETD_time' => 'required',
-                'ETA_date' => 'required',
-                'ETA_time' => 'required',
-
-
             ]);
             if ($validation->fails()) {
                 return response()->json([
